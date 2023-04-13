@@ -1,3 +1,16 @@
+# Dev Team Announcement
+
+## Search Page
+
+Enter your External API KEY before test the search page. Enter Key in "book-service.js"
+
+
+
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
