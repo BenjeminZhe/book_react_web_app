@@ -7,15 +7,15 @@ function NavigationSidebar() {
     // console.log(paths);
     return (
         <div className="list-group mt-3">
-            <div className="list-group-item fw-bold">Book Searcher</div>
+            <h2 className="list-group-item fw-bold">Book Searcher</h2>
 
             <Link to="/BookSearcher/home" className={`list-group-item `}>
                 <i className="bi bi-house-door-fill text-dark pe-1 "></i>
                 Home
             </Link>
-            <Link to="/BookSearcher/signup" className={`list-group-item`}>
+            <Link to="/BookSearcher/register" className={`list-group-item`}>
                 <i className="bi bi-person-plus-fill text-dark pe-1"></i>
-                Sign Up
+                Register
             </Link>
             <Link to="/BookSearcher/login" className={`list-group-item`}>
                 <i className="bi bi-box-arrow-in-right text-dark pe-1"></i>
