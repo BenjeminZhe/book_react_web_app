@@ -15,7 +15,7 @@ function Home() {
         const fetchBooks = async () => {
             const response = await axios.get(`${Month_TOP_BOOKS_API}/${year}/${month}`, {
                 headers: {
-                    // 'X-RapidAPI-Key': '742af23194msh5615cba23ad3829p137f63jsn366613c001ff',
+                    // 'X-RapidAPI-Key': 'ENTER YOUR KEY HERE',
                     'X-RapidAPI-Host': 'hapi-books.p.rapidapi.com'
                 }
             });
