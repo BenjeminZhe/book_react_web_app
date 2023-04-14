@@ -1,6 +1,6 @@
 // import {configureStore} from "@reduxjs/toolkit";
 // import {Provider} from "react-redux";
-import {Routes, Route} from "react-router";
+import {Routes, Route, Navigate} from "react-router";
 import NavigationSidebar from "./navigation-sidebar/index.js";
 // import HomeComponent from "./home";
 import SearchBooks from "./search/index.js";
@@ -28,9 +28,12 @@ function App() {
                   </div>
                   <div className="col-9">
                       <Routes>
-                          <Route path="/" element={<Home/>}/>
-                          <Route path="/search" element={<SearchBooks/>}/>
-                          {/*<Route path="/bookSearch" element={<BookSearch/>}/>*/}
+                          <Route path="/" element={<Navigate to="/BookSearcher/home"/>}/>
+                          <Route path="/BookSearcher/home" element={<Home/>}/>
+                          <Route path="/BookSearcher/search" element={<SearchBooks/>}/>
+                          {/*todo: To book detail page*/}
+                          {/*<Route path="/BookSearcher/search/:bookId" element={}/>*/}
+                          {/*/!*<Route path="/bookSearch" element={<BookSearch/>}/>*!/*/}
                       </Routes>
                   </div>
               </div>

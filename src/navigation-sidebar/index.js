@@ -6,22 +6,22 @@ function NavigationSidebar() {
     const paths = pathname.split('/');
     // console.log(paths);
     return (
-        <div className="list-group mt-2">
-            <div className="list-group-item fw-bold">BookStore</div>
+        <div className="list-group mt-3">
+            <div className="list-group-item fw-bold">Book Searcher</div>
 
-            <Link to="/" className={`list-group-item `}>
-                <i className="bi bi-house-door-fill text-dark pe-1"></i>
+            <Link to="/BookSearcher/home" className={`list-group-item `}>
+                <i className="bi bi-house-door-fill text-dark pe-1 "></i>
                 Home
             </Link>
-            <Link to="/signup" className={`list-group-item`}>
+            <Link to="/BookSearcher/signup" className={`list-group-item`}>
                 <i className="bi bi-person-plus-fill text-dark pe-1"></i>
                 Sign Up
             </Link>
-            <Link to="/login" className={`list-group-item`}>
+            <Link to="/BookSearcher/login" className={`list-group-item`}>
                 <i className="bi bi-box-arrow-in-right text-dark pe-1"></i>
                 Login
             </Link>
-            <Link to="/search" className={`list-group-item`}>
+            <Link to="/BookSearcher/search" className={`list-group-item`}>
                 <i className="bi bi-hash text-dark pe-1"></i>
                 Search
             </Link>

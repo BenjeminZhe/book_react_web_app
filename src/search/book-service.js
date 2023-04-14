@@ -7,6 +7,7 @@ export const searchBookByName = async (term) => {
     const response = await axios.get(`${BOOK_API}/search/${term}`, {
         headers: {
             // 'X-RapidAPI-Key': 'ENTER YOUR KEY HERE',
+                      'X-RapidAPI-Key': '742af23194msh5615cba23ad3829p137f63jsn366613c001ff',
             'X-RapidAPI-Host': 'hapi-books.p.rapidapi.com'
         }
     });
