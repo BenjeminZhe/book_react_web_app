@@ -1,18 +1,28 @@
-import {Link} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import SearchList from "./search-list.js";
 import NavigationSidebar from "../navigation-sidebar/index.js";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {searchBookByName} from "./book-service.js";
 import SearchListItem from "./search-list-item.js";
 
 function SearchBooks() {
-    const [search, setSearch] = useState("");
+    const {searchTerm} = useParams();
+    const [search, setSearch] = useState(searchTerm);
     const [results, setResults] = useState({});
+    const navigate = useNavigate();
     const searchBook = async () => {
         const response = await searchBookByName(search);
         setResults(response);
+        navigate(`/BookSearcher/search/${search}`);
         //console.log(response);
-    }
+    };
+    useEffect(() => {
+        if(searchTerm) {
+            searchBook();
+        }
+    }, [searchTerm]);
+
+
     return (
         <div className="container mt-3">
             <button
@@ -22,7 +32,7 @@ function SearchBooks() {
             </button>
             <input
                 className="form-control w-75"
-                type="text" value={search} onChange={(e) => setSearch(e.target.value)}/>
+                type="text" value={searchTerm} onChange={(e) => setSearch(e.target.value)}/>
             {
                 Array.isArray(results) &&
                 results.map(book => (

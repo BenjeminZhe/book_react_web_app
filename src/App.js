@@ -31,9 +31,9 @@ function App() {
                           <Route path="/" element={<Navigate to="/BookSearcher/home"/>}/>
                           <Route path="/BookSearcher/home" element={<Home/>}/>
                           <Route path="/BookSearcher/search" element={<SearchBooks/>}/>
+                          <Route path="/BookSearcher/search/:searchTerm" element={<SearchBooks/>}/>
                           {/*todo: To book detail page*/}
                           {/*<Route path="/BookSearcher/search/:bookId" element={}/>*/}
-                          {/*/!*<Route path="/bookSearch" element={<BookSearch/>}/>*!/*/}
                       </Routes>
                   </div>
               </div>
