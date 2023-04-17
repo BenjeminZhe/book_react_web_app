@@ -7,6 +7,8 @@ import SearchComponent from "search";
 import ProfileComponent from "profile"
 import usersReducer from "./reducers/users-reducer";
 import EditProfile from "./profile/edit-profile";
+import LoginPage from "./login";
+import RegisterPage from "./register";
 
 //import './App.css';
 const store = configureStore({
@@ -26,10 +28,14 @@ function App() {
              style={{"position": "relative"}}>
           <Routes>
             <Route index element={<HomeComponent/>} />
-            <Route path="home"    element={<HomeComponent/>}/>
-            <Route path="search" element={<SearchComponent/>}/>
-            <Route path="profile" element={<ProfileComponent/>}/>
-            <Route path="edit-profile" element={<EditProfile/>}/>
+            <Route path="/home"    element={<HomeComponent/>}/>
+            <Route path="/search" element={<SearchComponent/>}/>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/profile" element={<ProfileComponent/>}/>
+            <Route path="/profile/:userId" element={<ProfileComponent/>}/>
+            <Route path="/edit-profile" element={<EditProfile/>}/>
+            <Route path="/edit-profile/:userId" element={<EditProfile/>}/>
           </Routes>
         </div>
       </div>
