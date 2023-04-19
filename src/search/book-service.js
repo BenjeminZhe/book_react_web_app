@@ -40,7 +40,7 @@ export const getAwardedBooks = async () => {
 export const getPopularAuthors = async () => {
     const response = await axios.get(`${BOOK_API}/top_authors`, {
         headers: {
-            'X-RapidAPI-Key': 'a3abebbc72mshf77f8c697a7951fp1598a5jsn6212df2db974',
+            'X-RapidAPI-Key': '',
             'X-RapidAPI-Host': 'hapi-books.p.rapidapi.com'
         }
     });
