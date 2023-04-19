@@ -10,7 +10,7 @@ function SearchBooks() {
     const [search, setSearch] = useState(searchTerm);
     const [results, setResults] = useState({});
     const navigate = useNavigate();
-    const searchBook = async () => {
+    const fetchBooks = async () => {
         const response = await searchBookByName(search);
         setResults(response);
         navigate(`/BookSearcher/search/${search}`);
@@ -18,7 +18,7 @@ function SearchBooks() {
     };
     useEffect(() => {
         if(searchTerm) {
-            searchBook();
+            fetchBooks();
         }
     }, [searchTerm]);
 
@@ -26,7 +26,7 @@ function SearchBooks() {
     return (
         <div className="container mt-3">
             <button
-                onClick={searchBook}
+                onClick={fetchBooks}
                 className="float-end btn btn-primary"
             >Search
             </button>

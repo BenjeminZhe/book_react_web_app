@@ -6,12 +6,48 @@ const BOOK_API = "https://hapi-books.p.rapidapi.com";
 export const searchBookByName = async (term) => {
     const response = await axios.get(`${BOOK_API}/search/${term}`, {
         headers: {
-            // 'X-RapidAPI-Key': 'ENTER YOUR KEY HERE',
+            'X-RapidAPI-Key': '',
             'X-RapidAPI-Host': 'hapi-books.p.rapidapi.com'
         }
     });
     return response.data;
 }
+
+export const getTop15Books = async () => {
+    const month = new Date().getMonth() + 1;
+    const year = new Date().getFullYear();
+    const response = await axios.get(`${BOOK_API}/month/${year}/${month}`, {
+        headers: {
+             'X-RapidAPI-Key': '',
+            'X-RapidAPI-Host': 'hapi-books.p.rapidapi.com'
+        }
+    });
+    return response.data;
+}
+
+export const getAwardedBooks = async () => {
+    const year = new Date().getFullYear() - 1;
+    console.log(year);
+    const response = await axios.get(`${BOOK_API}/top/${year}`, {
+        headers: {
+            'X-RapidAPI-Key': '',
+            'X-RapidAPI-Host': 'hapi-books.p.rapidapi.com'
+        }
+    });
+    return response.data;
+}
+
+export const getPopularAuthors = async () => {
+    const response = await axios.get(`${BOOK_API}/top_authors`, {
+        headers: {
+            'X-RapidAPI-Key': 'a3abebbc72mshf77f8c697a7951fp1598a5jsn6212df2db974',
+            'X-RapidAPI-Host': 'hapi-books.p.rapidapi.com'
+        }
+    });
+    return response.data;
+}
+
+
 //
 // import SearchListItem from "./search-list-item.js";
 // import bookArray from "./books.json";

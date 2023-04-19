@@ -1,50 +1,97 @@
 import {useEffect, useState} from "react";
-import axios from "axios";
+import {getTop15Books, getAwardedBooks, getPopularAuthors} from "../search/book-service";
 import {useSelector} from "react-redux";
-
-const Month_TOP_BOOKS_API = "https://hapi-books.p.rapidapi.com/month";
+import bookArray from "../search/books.json";
+import {findLikesByUserId} from "../services/likes-service";
 
 function Home() {
-    const [books, setBooks] = useState([]);
-    const month = new Date().getMonth() + 1;
-    const year = new Date().getFullYear();
+    const [topBooks, setTopBooks] = useState([]);
+    const [awardBooks, setAwardBooks] = useState([]);
+    const [popularAuthors, setPopularAuthors] = useState([]);
 
-    // // retrieve current user
-    // const {currentUser} = useSelector((state) =>state.users);
+    // retrieve current user
+    const {currentUser} = useSelector((state) => state.users);
+    const fetchTopBooks = async () => {
+        const response = await getTop15Books();
+        setTopBooks(response);
+    };
+    const fetchAwardBooks = async () => {
+        const response = await getAwardedBooks();
+        setAwardBooks(response);
+    }
+
+    const fetchPopularAuthors = async () => {
+        const response = await getPopularAuthors();
+        setPopularAuthors(response);
+    }
+
     useEffect(() => {
-        const fetchBooks = async () => {
-            const response = await axios.get(`${Month_TOP_BOOKS_API}/${year}/${month}`, {
-                headers: {
-                    // 'X-RapidAPI-Key': 'ENTER YOUR KEY HERE',
-                    'X-RapidAPI-Host': 'hapi-books.p.rapidapi.com'
-                }
-            });
-            setBooks(response.data);
-        };
-        fetchBooks();
+        fetchTopBooks();
+        fetchAwardBooks();
+        fetchPopularAuthors();
     }, []);
 
     return (
 
         <div className="container mt-3">
-
-            {/*<div>*/}
-            {/*    <h3>Books you liked</h3>*/}
-            {/*    */}
-            {/*</div>*/}
             <div className="mt-4">
-                <h3>Top 15 Books in This Month</h3>
-                <div className="row row-cols-2 row-cols-md-3  row-cols-lg-6 g-4">
-                    {books && books.map((book) => (<div className="col" key={book.book_id}>
-                        <div className="card h-100">
-                            <img src={book.cover} className="card-img-top" height="200" width="100" alt={book.name}/>
-                            <div className="card-body p-1 text-center border-0">
-                                <p className="card-title">{book.name}</p>
+                {currentUser && <h5 className="mb-2">Welcome {currentUser.username} {currentUser.role}!!</h5>}
+                {(!currentUser || currentUser.role === "USER") &&
+                    <>
+                        <h3>Top 15 Books in This Month</h3>
+                        <div>
+                            <div className="row row-cols-2 row-cols-md-3  row-cols-lg-6 g-4">
+                                {topBooks && topBooks.map((book) => (<div className="col" key={book.book_id}>
+                                    <div className="card h-100">
+                                        <img src={book.cover} className="card-img-top" height="200" width="100"
+                                             alt={book.name}/>
+                                        <div className="card-body p-1 text-center border-0">
+                                            <p className="card-title">{book.name}</p>
+                                        </div>
+                                    </div>
+                                </div>))}
                             </div>
                         </div>
-                    </div>))}
-                </div>
+                    </>
+                }
+                {(currentUser && currentUser.role === "ADMIN") &&
+                    <>
+                        <h3>Top 15 Awarded Books in Last Year</h3>
+                        <div>
+                            <div className="row row-cols-2 row-cols-md-3  row-cols-lg-6 g-4">
+                                {awardBooks && awardBooks.map((book) => (<div className="col" key={book.book_id}>
+                                    <div className="card h-100">
+                                        <img src={book.cover} className="card-img-top" height="200" width="100"
+                                             alt={book.name}/>
+                                        <div className="card-body p-1 text-center border-0">
+                                            <p className="card-title">{book.name}</p>
+                                        </div>
+                                    </div>
+                                </div>))}
+                            </div>
+                        </div>
+                    </>
+                }
+                {(currentUser && currentUser.role === "AUTHOR") &&
+                    <>
+                        <h3>Top 15 Popular Authors</h3>
+                        <div>
+                            <div className="row row-cols-1 row-cols-md-2  row-cols-lg-4 g-4">
+                                {popularAuthors && popularAuthors.map((author) => (<div className="col" key={author.author_id}>
+                                    <div className="card h-100">
+                                        <img src={author.image} className="card-img-top" height="200" width="200"
+                                             alt={author.name}/>
+                                        <div className="card-body p-1 text-center border-0">
+                                            <p className="card-title">{author.name}</p>
+                                        </div>
+                                    </div>
+                                </div>))}
+                            </div>
+                        </div>
+                    </>
+                }
             </div>
+
             {/*<div className="table-responsive">*/}
             {/*    <table className="table">*/}
             {/*        <tbody>*/}
