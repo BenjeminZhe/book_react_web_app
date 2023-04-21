@@ -38,5 +38,17 @@
 }
 
 .wd-book-cover{
+  height: 400px;
   width: 300px;
+}
+
+.wd-text-synopsis{
+  font-size: 10px;
+  color: darkgrey;
+}
+
+.wd-text-general{
+  font-size: 13px;
+  color: grey;
+  font-family: -apple-system;
 }

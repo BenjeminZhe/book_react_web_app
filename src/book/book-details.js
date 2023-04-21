@@ -4,18 +4,28 @@ import { getBook } from "./book-service";
 import { useSelector } from "react-redux";
 import { userLikesBook } from "./likes-service";
 import 'bootstrap/dist/css/bootstrap.css';
+import '../App.css';
+import ReviewList from "./review-list";
 
 function BookDetailsScreen() {
+
+    // const { currentUser } = useSelector((state) => state.users);
+
     var { id } = useParams();
     console.log("id is ", id);
     const [book, setBook] = useState({
-        name: "red",
-        authors:"amy"
+        name: "loading...",
+        // authors:"loading..."
     });
+
+    const [review, setReview] = useState({});
+
+
     // const likeBook = async () => {
     //     const response = await userLikesBook(currentUser._id, id);
     //     console.log(response);
     // };
+
     const fetchBook = async () => {
         const response = await getBook(id);
         setBook(response);
@@ -23,32 +33,38 @@ function BookDetailsScreen() {
 
     useEffect(() => {
         fetchBook();
+        fetchReview();
     }, []);
 
     return (
-        <div class="list-group">
+        <div class="container">
+            <div>
+                <div className="container mt-3">
+                    {ReviewList()}
+                </div>
 
-            <h2>{book.name}</h2>
-            <img src={`${book.cover}`} className="wd-book-cover"/>
-            <h4>Author(s): {book.authors}</h4>
-
-            {/*{currentUser && (*/}
-            {/*    <>*/}
-            {/*        <button onClick={likeBook} className="btn btn-success">*/}
-            {/*            Like*/}
-            {/*        </button>*/}
-            {/*        <button className="btn btn-danger">Unlike</button>*/}
-            {/*    </>*/}
-            {/*)}*/}
-            <br />
-
-            <h4>Rating: {book.rating}</h4>
-            <h4>Pages: {book.pages}</h4>
-            <h4>Published Date: {book.published_date}</h4>
-            <h6>Synopsis: {book.synopsis}</h6>
+                <h2>{book.name}</h2>
+                <img src={`${book.cover}`} className="wd-book-cover"/>
 
 
-            {/*<pre>{JSON.stringify(book, null, 2)}</pre>*/}
+                {/*{currentUser && (*/}
+                {/*    <div>*/}
+                {/*        <button onClick={likeBook} className="btn btn-success">*/}
+                {/*            Like*/}
+                {/*        </button>*/}
+                {/*        <button className="btn btn-danger">Unlike</button>*/}
+                {/*    </div>*/}
+                {/*)}*/}
+                {/*<br/>*/}
+
+
+                <h5>Author(s): {book.authors}</h5>
+                <h5>Rating: {book.rating}</h5>
+                <h5>Pages: {book.pages}</h5>
+                <h5>Published Date: {book.published_date}</h5>
+                <h5>Synopsis: </h5> <h7 class="wd-text-general">{book.synopsis}</h7>
+
+            </div>
         </div>
     );
 }
