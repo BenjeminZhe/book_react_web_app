@@ -19,6 +19,9 @@ function LoginPage() {
       setError("Invalid Credentials. Please try again.");
     }
   };
+  if(currentUser) {
+    navigate("/profile");
+  }
   return (
     <div>
       <h1>Login</h1>

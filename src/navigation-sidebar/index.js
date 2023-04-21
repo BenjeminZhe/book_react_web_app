@@ -24,14 +24,14 @@ const NavigationSidebar = () => {
       <Link to="/search" className={`list-group-item
                     ${active === 'search'?'active':''}`}>
         <FontAwesomeIcon icon={faMagnifyingGlass} className="pe-1"/>
-        <span className={"d-none d-xl-inline"}>Home</span>
+        <span className={"d-none d-xl-inline"}>Search</span>
       </Link>
       <Link to="/profile" className={`list-group-item
                     ${active === 'profile'?'active':''}`}>
         <FontAwesomeIcon icon={faUser} className="pe-1"/>
         <span className={"d-none d-xl-inline"}>Profile</span>
       </Link>
-      <button width={120} className="btn btn-primary rounded-pill wd-tweet-button mt-2 w-100">Tweet</button>
+      {/*<button width={120} className="btn btn-primary rounded-pill wd-tweet-button mt-2 w-100">Tweet</button>*/}
     </div>
   );
 };

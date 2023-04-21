@@ -37,6 +37,10 @@ const RegisterPage = () => {
       setError('Required field cannot be empty')
       return
     }
+    if (!email.includes('@')) {
+      setError('Invalid email address!');
+      return
+    }
     if (password.length < 6) {
       setError('Password needs to be at least 6 characters')
       return
@@ -60,6 +64,7 @@ const RegisterPage = () => {
       }
     }
     const newUser = {username, firstName, lastName, email, password, role, dateOfBirth, joinDate, avatarIcon, backgroundImage, bio};
+    setError(null);
     dispatch(registerThunk(newUser));
   }
   if(currentUser) {

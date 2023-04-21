@@ -5,9 +5,11 @@ import { faArrowLeft} from "@fortawesome/free-solid-svg-icons";
 import {
   profileThunk,
   logoutThunk,
+  updateUserThunk,
 } from "../thunks/users-thunk";
-import { useNavigate} from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { findLikesByUserId } from "../book/likes-service";
+import { findUserById } from "../services/users-service";
 import {
   userFollowsUser,
   userUnfollowsUser,
@@ -17,12 +19,14 @@ import {
 import { Link } from "react-router-dom";
 import {getBook} from "../book/book-service";
 
-function ProfileScreen() {
+function OtherProfileScreen() {
+  const { userId } = useParams();
   const currentUser = useSelector((state) => state.users.currentUser);
   const [profile, setProfile] = useState(currentUser);
   const [likes, setLikes] = useState([]);
   const [following, setFollowing] = useState([]);
   const [follows, setFollows] = useState([]);
+  const [followCur, setFollowCur] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const fetchFollowing = async () => {
@@ -32,6 +36,9 @@ function ProfileScreen() {
   const fetchFollowers = async () => {
     const follows = await findFollowsByFollowedId(profile._id);
     setFollows(follows);
+    if (follows.findIndex(user => user._id === currentUser._id) !== -1) {
+      setFollowCur(true);
+    }
   };
   const fetchLikes = async () => {
     const likes = await findLikesByUserId(profile._id);
@@ -48,8 +55,8 @@ function ProfileScreen() {
   };
 
   const fetchProfile = async () => {
-    const response = await dispatch(profileThunk());
-    setProfile(response.payload);
+    const user = await findUserById(userId);
+    setProfile(user);
   };
   const loadScreen = async () => {
     // if (!profile) {
@@ -59,9 +66,28 @@ function ProfileScreen() {
     await fetchFollowing();
     await fetchFollowers();
   };
+  const followUser = async () => {
+    if (currentUser === null) {
+      navigate('/login');
+    }
+    await userFollowsUser(currentUser._id, profile._id);
+    setFollowCur(true);
+    const newFollows = follows.concat(currentUser);
+    setFollows(newFollows);
+  };
+  const unFollowUser = async () => {
+    await userUnfollowsUser(currentUser._id, profile._id);
+    setFollowCur(false);
+    const newFollows = follows.filter(user => user._id != currentUser._id);
+    setFollows(newFollows);
+  };
 
-  if (currentUser === null) {
-    navigate('/login');
+  if (typeof userId !== undefined) {
+    navigate('/profile');
+  }
+
+  if (currentUser._id === profile._id) {
+    navigate('/profile');
   }
 
   useEffect(() => {
@@ -80,33 +106,39 @@ function ProfileScreen() {
           <div className="fw-bold fs-5 text-black">My Profile</div>
         </div>
       </div>
+      <img src={`/images/${profile.backgroundImage}`} className="w-100 pb-2" height={200} alt="banner" />
+      <img src={`/images/${profile.avatarIcon}`} className="rounded-circle img-thumbnail img-fluid position-relative border-0 profile-pic" width={120} alt="banner" />
+      {currentUser && currentUser.role === 'ADMIN' && (<Link to="/tuiter/edit-profile" title="edit"><button className="rounded-pill float-end fw-bold border border-gray bg-transparent px-3 py-1">Edit Profile</button></Link>)}
+      <h1>
+        {!followCur && (<button onClick={followUser} className="btn btn-primary float-end">
+          Follow
+        </button>)}
+        {typeof userId !== undefined && followCur && (<button onClick={unFollowUser} className="btn btn-primary float-end">
+          UnFollow
+        </button>)}
+      </h1>
 
       {profile && (
-        <>
-          <img src={`/images/${profile.backgroundImage}`} className="w-100 pb-2" height={200} alt="banner" />
-          <img src={`/images/${profile.avatarIcon}`} className="rounded-circle img-thumbnail img-fluid position-relative border-0 profile-pic" width={120} alt="banner" />
-          <Link to="/tuiter/edit-profile" title="edit"><button className="rounded-pill float-end fw-bold border border-gray bg-transparent px-3 py-1">Edit Profile</button></Link>
-          <div className="form-group">
-            <h2>Profile</h2>
-            <div className="ms-3">
-              <ul className="list-group list-group-flush">
-                <li className="list-group-item w-75"><div className="fw-bold text-secondary">User Name:<span className="text-dark ps-2">{profile.username}</span></div></li>
-                <li className="list-group-item w-75"><div className="fw-bold text-secondary">Email:<span className="text-dark ps-2">{profile.email}</span></div></li>
-                <li className="list-group-item w-75"><div className="fw-bold text-secondary">Last Name:<span className="text-dark ps-2">{profile.lastName}</span></div></li>
-                <li className="list-group-item w-75"><div className="fw-bold text-secondary">First Name:<span className="text-dark ps-2">{profile.firstName}</span></div></li>
-                <li className="list-group-item w-75"><div className="fw-bold text-secondary">Birthday:<span className="text-dark ps-2">{profile.dateOfBirth}</span></div></li>
-                <li className="list-group-item w-75"><div className="fw-bold text-secondary">Join Date:<span className="text-dark ps-2">{profile.joinDate}</span></div></li>
-                <li className="list-group-item w-75"><div className="fw-bold text-secondary">Role:<span className="text-dark ps-2">{currentUser.role}</span></div></li>
-                <li className="list-group-item w-75"><div className="fw-bold text-secondary">Bio:<span className="text-dark ps-2">{currentUser.bio}</span></div></li>
-              </ul>
-            </div>
-
-            <div>
-              <h3>{profile.username}</h3>
-              <h3>{profile._id}</h3>
-            </div>
+        <div className="form-group">
+          <h2>Profile</h2>
+          <div className="ms-3">
+            <ul className="list-group list-group-flush">
+              <li className="list-group-item w-75"><div className="fw-bold text-secondary">User Name:<span className="text-dark ps-2">{profile.username}</span></div></li>
+              <li className="list-group-item w-75"><div className="fw-bold text-secondary">Email:<span className="text-dark ps-2">{profile.email}</span></div></li>
+              <li className="list-group-item w-75"><div className="fw-bold text-secondary">Last Name:<span className="text-dark ps-2">{profile.lastName}</span></div></li>
+              <li className="list-group-item w-75"><div className="fw-bold text-secondary">First Name:<span className="text-dark ps-2">{profile.firstName}</span></div></li>
+              <li className="list-group-item w-75"><div className="fw-bold text-secondary">Birthday:<span className="text-dark ps-2">{profile.dateOfBirth}</span></div></li>
+              <li className="list-group-item w-75"><div className="fw-bold text-secondary">Join Date:<span className="text-dark ps-2">{profile.joinDate}</span></div></li>
+              <li className="list-group-item w-75"><div className="fw-bold text-secondary">Role:<span className="text-dark ps-2">{currentUser.role}</span></div></li>
+              <li className="list-group-item w-75"><div className="fw-bold text-secondary">Bio:<span className="text-dark ps-2">{currentUser.bio}</span></div></li>
+            </ul>
           </div>
-        </>
+
+          <div>
+            <h3>{profile.username}</h3>
+            <h3>{profile._id}</h3>
+          </div>
+        </div>
       )}
 
       {follows && (
@@ -175,4 +207,4 @@ function ProfileScreen() {
   );
 }
 
-export default ProfileScreen;
+export default OtherProfileScreen;
