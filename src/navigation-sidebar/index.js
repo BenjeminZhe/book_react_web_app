@@ -46,7 +46,9 @@ function NavigationSidebar() {
                 }
             </div>
             {currentUser && paths[2] === "home" &&
-                <CurrentUserLikedBooks/>}
+                <CurrentUserLikedBooks
+                    currentUser={currentUser}
+                />}
         </>
     );
 }

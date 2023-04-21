@@ -14,10 +14,12 @@ import {Provider} from "react-redux";
 // import EditProfile from "./profile/edit-profile";
 import LoginScreen from "./login/index.js";
 import Profile from "./profile/index.js";
+import {likesReducer} from "./reducers/likes-reducer";
 //import './App.css';
 const store = configureStore({
   reducer: {
     users: usersReducer,
+      likesReducer: likesReducer
   }
 })
 

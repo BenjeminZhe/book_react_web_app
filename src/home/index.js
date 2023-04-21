@@ -1,8 +1,9 @@
 import {useEffect, useState} from "react";
-import {getTop15Books, getAwardedBooks, getPopularAuthors} from "../search/book-service";
+import {getTop15Books, getAwardedBooks, getPopularAuthors} from "../services/book-service";
 import {useSelector} from "react-redux";
 import bookArray from "../search/books.json";
 import {findLikesByUserId} from "../services/likes-service";
+import {Link} from "react-router-dom";
 
 function Home() {
     const [topBooks, setTopBooks] = useState([]);
@@ -42,13 +43,16 @@ function Home() {
                         <div>
                             <div className="row row-cols-2 row-cols-md-3  row-cols-lg-6 g-4">
                                 {topBooks && topBooks.map((book) => (<div className="col" key={book.book_id}>
-                                    <div className="card h-100">
-                                        <img src={book.cover} className="card-img-top" height="200" width="100"
-                                             alt={book.name}/>
-                                        <div className="card-body p-1 text-center border-0">
-                                            <p className="card-title">{book.name}</p>
+                                    {/*todo: link with detail page*/}
+                                    <Link to={`/BookSearcher/book/${book.name}`} className="text-decoration-none">
+                                        <div className="card h-100">
+                                            <img src={book.cover} className="card-img-top" height="200" width="100"
+                                                 alt={book.name}/>
+                                            <div className="card-body p-1 text-center border-0">
+                                                <p className="card-title">{book.name}</p>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </Link>
                                 </div>))}
                             </div>
                         </div>
@@ -60,13 +64,16 @@ function Home() {
                         <div>
                             <div className="row row-cols-2 row-cols-md-3  row-cols-lg-6 g-4">
                                 {awardBooks && awardBooks.map((book) => (<div className="col" key={book.book_id}>
-                                    <div className="card h-100">
-                                        <img src={book.cover} className="card-img-top" height="200" width="100"
-                                             alt={book.name}/>
-                                        <div className="card-body p-1 text-center border-0">
-                                            <p className="card-title">{book.name}</p>
+                                    <Link to={`/BookSearcher/book/${book.name}`} className="text-decoration-none text-dark">
+
+                                        <div className="card h-100">
+                                            <img src={book.cover} className="card-img-top" height="200" width="100"
+                                                 alt={book.name}/>
+                                            <div className="card-body p-1 text-center border-0">
+                                                <p className="card-title">{book.name}</p>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </Link>
                                 </div>))}
                             </div>
                         </div>
@@ -77,15 +84,20 @@ function Home() {
                         <h3>Top 15 Popular Authors</h3>
                         <div>
                             <div className="row row-cols-1 row-cols-md-2  row-cols-lg-4 g-4">
-                                {popularAuthors && popularAuthors.map((author) => (<div className="col" key={author.author_id}>
-                                    <div className="card h-100">
-                                        <img src={author.image} className="card-img-top" height="200" width="200"
-                                             alt={author.name}/>
-                                        <div className="card-body p-1 text-center border-0">
-                                            <p className="card-title">{author.name}</p>
+                                {popularAuthors && popularAuthors.map((author) => (
+                                    <Link to={`/BookSearcher/book/${author.name}`} className="text-decoration-none">
+                                        <div className="col" key={author.author_id}>
+                                            <div className="card h-100">
+                                                <img src={author.image} className="card-img-top" height="200"
+                                                     width="200"
+                                                     alt={author.name}/>
+                                                <div className="card-body p-1 text-center border-0">
+                                                    <p className="card-title">{author.name}</p>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>))}
+                                    </Link>
+                                ))}
                             </div>
                         </div>
                     </>

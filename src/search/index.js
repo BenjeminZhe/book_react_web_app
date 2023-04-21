@@ -2,37 +2,43 @@ import {Link, useNavigate, useParams} from "react-router-dom";
 import SearchList from "./search-list.js";
 import NavigationSidebar from "../navigation-sidebar/index.js";
 import {useEffect, useState} from "react";
-import {searchBookByName} from "./book-service.js";
+import {searchBookByName} from "../services/book-service.js";
 import SearchListItem from "./search-list-item.js";
 
 function SearchBooks() {
-    const {searchTerm} = useParams();
-    const [search, setSearch] = useState(searchTerm);
+    const {searchTerm: defaultSearchTerm} = useParams();
+    const [searchTerm, setSearchTerm] = useState(defaultSearchTerm || '');
     const [results, setResults] = useState({});
     const navigate = useNavigate();
     const fetchBooks = async () => {
-        const response = await searchBookByName(search);
+        const response = await searchBookByName(searchTerm);
         setResults(response);
-        navigate(`/BookSearcher/search/${search}`);
         //console.log(response);
     };
     useEffect(() => {
-        if(searchTerm) {
-            fetchBooks();
+        if(defaultSearchTerm) {
+            setSearchTerm(defaultSearchTerm);
         }
-    }, [searchTerm]);
+    }, [defaultSearchTerm]);
+
+    const handleSearch = async (e) => {
+        const response = await searchBookByName(searchTerm);
+        setResults(response);
+        navigate(`/BookSearcher/search/${searchTerm}`);
+    }
 
 
     return (
         <div className="container mt-3">
             <button
-                onClick={fetchBooks}
+                onClick={handleSearch}
                 className="float-end btn btn-primary"
             >Search
             </button>
             <input
                 className="form-control w-75"
-                type="text" value={searchTerm} onChange={(e) => setSearch(e.target.value)}/>
+                placeholder="Search Books"
+                type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/>
             {
                 Array.isArray(results) &&
                 results.map(book => (
