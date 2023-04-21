@@ -15,6 +15,7 @@ import {Provider} from "react-redux";
 import LoginScreen from "./login/index.js";
 import Profile from "./profile/index.js";
 import {likesReducer} from "./reducers/likes-reducer";
+import RegisterPage from "./register/index.js";
 //import './App.css';
 const store = configureStore({
   reducer: {
@@ -24,6 +25,7 @@ const store = configureStore({
 })
 
 function App() {
+    //console.log(store.getState())
     return (
         <Provider store={store}>
         <BrowserRouter>
@@ -39,6 +41,7 @@ function App() {
                             <Route path="/BookSearcher/home" element={<Home/>}/>
                             <Route path="/BookSearcher/search" element={<SearchBooks/>}/>
                             <Route path="/BookSearcher/search/:searchTerm" element={<SearchBooks/>}/>
+                            <Route path="/BookSearcher/register" element={<RegisterPage/>}/>
                             <Route path="/BookSearcher/login" element={<LoginScreen/>}/>
                             <Route path="/BookSearcher/profile" element={<Profile/>}/>
                         </Routes>

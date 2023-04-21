@@ -35,9 +35,15 @@ export const deleteUserThunk = createAsyncThunk("users/delete", async (id) => {
     return id;
 });
 
-export const loginThunk = createAsyncThunk("users/login", async (user) => {
-    const response = await userService.login(user);
-    return response.data;
+export const loginThunk = createAsyncThunk("users/login", async (user,{rejectWithValue}) => {
+    // const response = await userService.login(user);
+    // return response.data;
+    try {
+        const response = await userService.login(user);
+        return {data: response.data, loggedIn: true};
+    }catch (err) {
+        return rejectWithValue(false);
+    }
 });
 
 export const logoutThunk = createAsyncThunk("users/logout", async () => {
