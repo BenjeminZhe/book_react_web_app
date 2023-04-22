@@ -1,16 +1,19 @@
 import React from "react";
-import {Link, useLocation} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import CurrentUserLikedBooks from "../home/currentUserLikedBooks";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {logoutThunk} from "../thunks/users-thunk";
 
 function NavigationSidebar() {
     const currentUser = useSelector((state) => state.users.currentUser);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const {pathname} = useLocation();
     const paths = pathname.split('/');
     const active = paths[2];
     return (
         <>
-            <div className="list-group mt-3">
+            <div className="list-group mt-3 text-center">
                 <h2 className="list-group-item fw-bold">Book Searcher</h2>
                 <Link to="/BookSearcher/home" className={`list-group-item ${active === 'home'?'active':''}`}>
                     <i className="bi bi-house-door-fill text-dark pe-1" ></i>
@@ -39,10 +42,15 @@ function NavigationSidebar() {
                     </Link>
                 }
                 {currentUser &&
-                    <Link to="/BookSearcher/logout" className={`list-group-item ${active === 'logout'?'active':''}`}>
+                    <button
+                        onClick={() => {
+                            dispatch(logoutThunk());
+                            navigate("/BookSearcher/home");
+                        }}
+                        className={`list-group-item ${active === 'logout'?'active':''}`}>
                         <i className="bi bi-box-arrow-right text-dark pe-1"></i>
                         Logout
-                    </Link>
+                    </button>
                 }
             </div>
             {currentUser && paths[2] === "home" &&

@@ -36,10 +36,13 @@ function Home() {
 
         <div className="container mt-3">
             <div className="mt-4">
-                {currentUser && <h5 className="mb-2">Welcome {currentUser.username} {currentUser.role}!!</h5>}
+                {currentUser &&
+                    <h5 className="mb-4">
+                        Welcome To {currentUser.role} Home, {currentUser.username}!!
+                    </h5>}
                 {(!currentUser || currentUser.role === "USER") &&
                     <>
-                        <h3>Top 15 Books in This Month</h3>
+                        <h3 className="mb-3">Top 15 Books in This Month</h3>
                         <div>
                             <div className="row row-cols-2 row-cols-md-3  row-cols-lg-6 g-4">
                                 {topBooks && topBooks.map((book) => (<div className="col" key={book.book_id}>
