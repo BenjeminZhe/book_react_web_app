@@ -3,14 +3,14 @@ import axios from "axios";
 const LIKES_API = "http://localhost:4000/likes";
 const USERS_API = "http://localhost:4000/users";
 
-export const userLikesBook = async (userId, bookId) => {
+export const userLikesBook = async (bookId) => {
     const response = await axios.post(
         `${USERS_API}/likes/${bookId}`
     );
     return response.data;
 };
 
-export const userUnlikesBook = async (userId, bookId) => {
+export const userUnlikesBook = async (bookId) => {
     const response = await axios.delete(
         `${USERS_API}/unlikes/${bookId}`
     );

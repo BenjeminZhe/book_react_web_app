@@ -25,10 +25,10 @@ const SearchListItemStats = ({book}) => {
     const updateLikesHandler = async () => {
         if (currentUser) {
             if (liked) {
-                await dispatch(UserUnlikesBookThunk(currentUser._id, book.book_id));
+                await dispatch(UserUnlikesBookThunk(book.book_id));
                 setLiked(false);
             } else {
-                await dispatch(UserLikesBookThunk(currentUser._id, book.book_id));
+                await dispatch(UserLikesBookThunk(book.book_id));
                 setLiked(true);
             }
         }else{
