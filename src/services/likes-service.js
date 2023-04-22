@@ -5,14 +5,14 @@ const USERS_API = "http://localhost:4000/users";
 
 export const userLikesBook = async (userId, bookId) => {
     const response = await axios.post(
-        `${USERS_API}/${userId}/likes/books/${bookId}`
+        `${USERS_API}/likes/${bookId}`
     );
     return response.data;
 };
 
 export const userUnlikesBook = async (userId, bookId) => {
     const response = await axios.delete(
-        `${USERS_API}/${userId}/likes/books/${bookId}`
+        `${USERS_API}/unlikes/${bookId}`
     );
     return response.data;
 };
@@ -24,7 +24,7 @@ export const findAllLikes = async () => {
 }
 
 export const findBooksLikedByUser = async (userId) => {
-    const response = await axios.get(`${USERS_API}/${userId}/books`);
+    const response = await axios.get(`${LIKES_API}/${userId}/books`);
     return response.data;
 };
 

@@ -16,13 +16,20 @@ import LoginScreen from "./login/index.js";
 import Profile from "./profile/index.js";
 import {likesReducer} from "./reducers/likes-reducer";
 import RegisterPage from "./register/index.js";
+import {awardedBooksReducer, popularAuthorReducer, top15BooksReducer} from "./reducers/book-reducer";
+import thunk from "redux-thunk";
 //import './App.css';
 const store = configureStore({
-  reducer: {
-    users: usersReducer,
-      likesReducer: likesReducer
-  }
-})
+    reducer: {
+        users: usersReducer,
+        likes: likesReducer,
+        top15Books: top15BooksReducer,
+        awardedBooks: awardedBooksReducer,
+        popularAuthors: popularAuthorReducer,
+    },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
+});
+
 
 function App() {
     //console.log(store.getState())
