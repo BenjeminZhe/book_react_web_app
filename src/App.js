@@ -1,46 +1,77 @@
+// import {configureStore} from "@reduxjs/toolkit";
+// import {Provider} from "react-redux";
+import {Routes, Route, Navigate} from "react-router";
+import NavigationSidebar from "./navigation-sidebar/index.js";
+// import HomeComponent from "./home";
+import SearchBooks from "./search/index.js";
+import {BrowserRouter} from "react-router-dom";
+import Home from "./home";
+import CurrentUserLikedBooks from "./home/currentUserLikedBooks";
 import {configureStore} from "@reduxjs/toolkit";
-import {Provider} from "react-redux";
-import {Routes, Route} from "react-router";
-import NavigationSidebar from "./navigation-sidebar";
-import HomeComponent from "./home";
-import SearchComponent from "./search";
-import ProfileComponent from "./profile"
+// import ProfileComponent from "./profile"
 import usersReducer from "./reducers/users-reducer";
-import EditProfile from "./profile/edit-profile";
+import {Provider} from "react-redux";
+// import EditProfile from "./profile/edit-profile";
+import LoginScreen from "./login/index.js";
+import Profile from "./profile/index.js";
+import {likesReducer} from "./reducers/likes-reducer";
+import RegisterPage from "./register/index.js";
 import BookDetailsScreen from "./book/book-details"
-import { BrowserRouter } from 'react-router-dom';
-import './App.css';
 
+//import './App.css';
 const store = configureStore({
   reducer: {
     users: usersReducer,
+      likesReducer: likesReducer
   }
 })
 
 function App() {
-  return (
-    <Provider store={store}>
-      <div className="row mt-2">
-        <div className="col-2 col-md-2 col-lg-1 col-xl-2">
-          {/*<NavigationSidebar active="home"/>*/}
-        </div>
-        <div className="col-10 col-md-10 col-lg-11 col-xl-10"
-             style={{"position": "relative"}}>
-          <BrowserRouter>
-          <Routes>
-            {/*<Route index element={<HomeComponent/>} />*/}
-            {/*<Route path="home"    element={<HomeComponent/>}/>*/}
-            {/*<Route path="search" element={<SearchComponent/>}/>*/}
-            {/*<Route path="profile" element={<ProfileComponent/>}/>*/}
-            {/*<Route path="edit-profile" element={<EditProfile/>}/>*/}
-            <Route path="/book/:id" element={<BookDetailsScreen/>}/>
+    //console.log(store.getState())
+    return (
+        <Provider store={store}>
+        <BrowserRouter>
+            <div className="container">
+                <div className="row mt-2">
+                    <div className="col-3">
+                        <NavigationSidebar/>
 
-          </Routes>
-          </BrowserRouter>
-        </div>
-      </div>
-    </Provider>
-  );
+                    </div>
+                    <div className="col-9">
+                        <Routes>
+                            <Route path="/" element={<Navigate to="/BookSearcher/home"/>}/>
+                            <Route path="/BookSearcher/home" element={<Home/>}/>
+                            <Route path="/BookSearcher/search" element={<SearchBooks/>}/>
+                            <Route path="/BookSearcher/search/:searchTerm" element={<SearchBooks/>}/>
+                            <Route path="/BookSearcher/register" element={<RegisterPage/>}/>
+                            <Route path="/BookSearcher/login" element={<LoginScreen/>}/>
+                            <Route path="/BookSearcher/profile" element={<Profile/>}/>
+                            <Route path="/book/:id" element={<BookDetailsScreen/>}/>
+                        </Routes>
+                    </div>
+                </div>
+            </div>
+        </BrowserRouter>
+        </Provider>
+        // <div className="row mt-2">
+        //   <div className="col-2 col-md-2 col-lg-1 col-xl-2">
+        //     <NavigationSidebar/>
+        //   </div>
+        //   <div className="col-10 col-md-10 col-lg-11 col-xl-10"
+        //        style={{"position": "relative"}}>
+        //       <BrowserRouter>
+        //     <Routes>
+        //       {/*<Route index element={<HomeComponent/>} />*/}
+        //       {/*<Route path="home"    element={<HomeComponent/>}/>*/}
+        //       <Route path="search" element={<SearchBooks/>}/>
+        //       {/*<Route path="profile" element={<ProfileComponent/>}/>*/}
+        //       {/*<Route path="edit-profile" element={<EditProfile/>}/>*/}
+        //     </Routes>
+        //       </BrowserRouter>
+        //   </div>
+        // </div>
+        //</Provider>
+    );
 }
 
 export default App;
