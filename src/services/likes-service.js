@@ -24,11 +24,7 @@ export const findAllLikes = async () => {
 }
 
 export const findBooksLikedByUser = async (userId) => {
-<<<<<<< HEAD
-    const response = await axios.get(`${USERS_API}/${userId}/likes`);
-=======
     const response = await axios.get(`${LIKES_API}/${userId}/books`);
->>>>>>> yuanmanhong
     return response.data;
 };
 
