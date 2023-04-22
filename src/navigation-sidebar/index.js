@@ -17,13 +17,13 @@ function NavigationSidebar() {
                     Home
                 </Link>
                 {!currentUser &&
-                    <Link to="/BookSearcher/register" className={`list-group-item ${active === 'register'?'active':''}`}>
+                    <Link to="/User/register" className={`list-group-item ${active === 'register'?'active':''}`}>
                         <i className="bi bi-person-plus-fill text-dark pe-1"></i>
                         Register
                     </Link>
                 }
                 {!currentUser &&
-                    <Link to="/BookSearcher/login" className={`list-group-item ${active === 'login'?'active':''}`}>
+                    <Link to="/User/login" className={`list-group-item ${active === 'login'?'active':''}`}>
                         <i className="bi bi-box-arrow-in-right text-dark pe-1"></i>
                         Login
                     </Link>
@@ -33,13 +33,17 @@ function NavigationSidebar() {
                     Search
                 </Link>
                 {currentUser &&
-                    <Link to="/BookSearcher/profile" className={`list-group-item ${active === 'profile'?'active':''}`}>
+                    <Link to="/User/profile" className={`list-group-item ${active === 'profile'?'active':''}`}>
                         <i className="bi bi-person-fill text-dark pe-1"></i>
                         Profile
                     </Link>
                 }
+                {currentUser  && currentUser.role === 'ADMIN'
+                  && <Link to="/User/admin">Admin</Link>}
+                {currentUser  && currentUser.role === 'AUTHOR'
+                  && <Link to="/User/author">Author</Link>}
                 {currentUser &&
-                    <Link to="/BookSearcher/logout" className={`list-group-item ${active === 'logout'?'active':''}`}>
+                    <Link to="/User/logout" className={`list-group-item ${active === 'logout'?'active':''}`}>
                         <i className="bi bi-box-arrow-right text-dark pe-1"></i>
                         Logout
                     </Link>
