@@ -1,16 +1,18 @@
 import axios from "axios";
 
-const LIKES_API = "http://localhost:4000/api/likes";
-const USERS_API = "http://localhost:4000/api/users";
+const LIKES_API = "http://localhost:4000/users/likes";
 
-export const userLikesBook = async (userId, book_id) => {
+export const userLikesBook = async (book_id) => {
     const response = await axios.post(
-        `${USERS_API}/${userId}/likes/books/${book_id}`
+        `${LIKES_API}/{book_id}`
     );
     return response.data;
 };
 
-export const findLikesByUserId = async (userId) => {
-    const response = await axios.get(`${USERS_API}/${userId}/likes`);
+export const findBooksLikesByUserId = async (userId, book_id) => {
+    const response = await axios.post(
+        `http://localhost:4000/${userId}/likes`,
+        userId, book_id
+    );
     return response.data;
 };

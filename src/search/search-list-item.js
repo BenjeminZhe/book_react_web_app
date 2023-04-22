@@ -29,7 +29,7 @@ const SearchListItem = ({book}) => {
                 </div>
                 <div className="card-body col-sm-3 col-md-7 ms-md-2">
                     {/*todo: link to detail page*/}
-                    <Link to={`XXX`} className="text-decoration-none text-dark">
+                    <Link to={`/book/${book.book_id}`} className="text-decoration-none text-dark">
                         <h5 className="card-title">{book.name}</h5>
                         <div className="card-text mt-4">
                             {getAuthors(book.authors)}

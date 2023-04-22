@@ -6,6 +6,7 @@ import { userLikesBook } from "./likes-service";
 import 'bootstrap/dist/css/bootstrap.css';
 import '../App.css';
 import ReviewList from "./review-list";
+import LikeBook from "./like";
 
 function BookDetailsScreen() {
 
@@ -13,13 +14,11 @@ function BookDetailsScreen() {
 
     var { id } = useParams();
     console.log("id is ", id);
+    const {currentUser} = useSelector((state) => state.users);
     const [book, setBook] = useState({
         name: "loading...",
         // authors:"loading..."
     });
-
-    const [review, setReview] = useState({});
-
 
     // const likeBook = async () => {
     //     const response = await userLikesBook(currentUser._id, id);
@@ -33,19 +32,28 @@ function BookDetailsScreen() {
 
     useEffect(() => {
         fetchBook();
-        fetchReview();
     }, []);
 
     return (
         <div class="container">
             <div>
-                <div className="container mt-3">
-                    {ReviewList()}
-                </div>
-
                 <h2>{book.name}</h2>
                 <img src={`${book.cover}`} className="wd-book-cover"/>
+                <h5>Author(s): {book.authors}</h5>
+                <h5>Rating: {book.rating}</h5>
+                <br/>
 
+                <div>
+                    {(<LikeBook />)}
+                </div>
+
+
+                <div className="container">
+                {/* currentUser && currentUser.role === "USER" &&  */}
+                    {(<ReviewList />)}
+                </div>
+
+            
 
                 {/*{currentUser && (*/}
                 {/*    <div>*/}
@@ -55,11 +63,8 @@ function BookDetailsScreen() {
                 {/*        <button className="btn btn-danger">Unlike</button>*/}
                 {/*    </div>*/}
                 {/*)}*/}
-                {/*<br/>*/}
+                <br/>
 
-
-                <h5>Author(s): {book.authors}</h5>
-                <h5>Rating: {book.rating}</h5>
                 <h5>Pages: {book.pages}</h5>
                 <h5>Published Date: {book.published_date}</h5>
                 <h5>Synopsis: </h5> <h7 class="wd-text-general">{book.synopsis}</h7>
