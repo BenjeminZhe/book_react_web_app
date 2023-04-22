@@ -16,7 +16,6 @@ function ReviewList() {
         const formData = new FormData(event.target);
         const newReview = {
             // reviewer: formData.get('reviewer'),
-            author: currentUser && currentUser.id || "643f21f108499e78a8045a5a",
             review: formData.get('text'),
             book_id: id
         };
@@ -64,21 +63,3 @@ function ReviewList() {
 }
 
 export default ReviewList;
-
-// const ReviewList = ({results}) => {
-//     return (
-//         <div className="container">
-//             <div className="">
-//                 {console.log(results)}
-//                 {results.map(book => (
-//                     <ReviewListItem
-//                         key={book.book_id}
-//                         book={book}
-//                     />
-//                 ))}
-//             </div>
-//         </div>
-//     )
-// }
-//
-// export default ReviewList;
