@@ -2,7 +2,6 @@ import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getBook } from "./book-service";
 import { useSelector } from "react-redux";
-import { userLikesBook } from "./likes-service";
 import 'bootstrap/dist/css/bootstrap.css';
 import '../App.css';
 import ReviewList from "./review-list";
@@ -19,11 +18,7 @@ function BookDetailsScreen() {
         name: "loading...",
         // authors:"loading..."
     });
-
-    // const likeBook = async () => {
-    //     const response = await userLikesBook(currentUser._id, id);
-    //     console.log(response);
-    // };
+    
 
     const fetchBook = async () => {
         const response = await getBook(id);
@@ -43,28 +38,19 @@ function BookDetailsScreen() {
                 <h5>Rating: {book.rating}</h5>
                 <br/>
 
-                <div>
-                    {(<LikeBook />)}
-                </div>
+                {currentUser && currentUser.role === "USER" &&(
+                    <div>
+                        {(<LikeBook />)}
+                    </div>
+                )}
 
+                {currentUser && currentUser.role === "USER" &&(
+                    <div className="container">
+                        {(<ReviewList />)}
+                    </div>
+                )}
 
-                <div className="container">
-                {/* currentUser && currentUser.role === "USER" &&  */}
-                    {(<ReviewList />)}
-                </div>
-
-            
-
-                {/*{currentUser && (*/}
-                {/*    <div>*/}
-                {/*        <button onClick={likeBook} className="btn btn-success">*/}
-                {/*            Like*/}
-                {/*        </button>*/}
-                {/*        <button className="btn btn-danger">Unlike</button>*/}
-                {/*    </div>*/}
-                {/*)}*/}
                 <br/>
-
                 <h5>Pages: {book.pages}</h5>
                 <h5>Published Date: {book.published_date}</h5>
                 <h5>Synopsis: </h5> <h7 class="wd-text-general">{book.synopsis}</h7>
