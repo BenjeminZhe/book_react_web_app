@@ -38,10 +38,17 @@ function NavigationSidebar() {
                         Profile
                     </Link>
                 }
-                {currentUser  && currentUser.role === 'ADMIN'
-                  && <Link to="/User/admin">Admin</Link>}
-                {currentUser  && currentUser.role === 'AUTHOR'
-                  && <Link to="/User/author">Author</Link>}
+                {currentUser && currentUser.role === 'ADMIN'
+                  && <Link to="/User/admin" className={`list-group-item ${active === 'admin'?'active':''}`}>
+                        <i className="bi bi-person-badge-fill text-dark pe-1"></i>
+                        Admin
+                     </Link>
+                }
+                {currentUser && currentUser.role === 'AUTHOR'
+                  && <Link to="/User/author" className={`list-group-item ${active === 'author'?'active':''}`}>
+                      <i className="bi bi-pencil-fill text-dark pe-1"></i>
+                      Author
+                  </Link>}
                 {currentUser &&
                     <Link to="/User/logout" className={`list-group-item ${active === 'logout'?'active':''}`}>
                         <i className="bi bi-box-arrow-right text-dark pe-1"></i>
