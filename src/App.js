@@ -16,6 +16,8 @@ import LoginScreen from "./login/index.js";
 import Profile from "./profile/index.js";
 import {likesReducer} from "./reducers/likes-reducer";
 import RegisterPage from "./register/index.js";
+import BookDetailsScreen from "./book/book-details"
+
 //import './App.css';
 const store = configureStore({
   reducer: {
@@ -44,6 +46,7 @@ function App() {
                             <Route path="/BookSearcher/register" element={<RegisterPage/>}/>
                             <Route path="/BookSearcher/login" element={<LoginScreen/>}/>
                             <Route path="/BookSearcher/profile" element={<Profile/>}/>
+                            <Route path="/book/:id" element={<BookDetailsScreen/>}/>
                         </Routes>
                     </div>
                 </div>
