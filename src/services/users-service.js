@@ -6,7 +6,11 @@ const api = axios.create({
 });
 
 export const findAllUsers = async () => {
+<<<<<<< HEAD
     const response = await axios.get(`${USERS_API_URL}/users`);
+=======
+    const response = await axios.get(USERS_API_URL + "/users");
+>>>>>>> yuanmanhong
     return response.data;
 };
 
@@ -16,7 +20,11 @@ export const findUserById = async (id) => {
 };
 
 export const createUser = (user) => {
+<<<<<<< HEAD
     return axios.post(`${USERS_API_URL}/users`, user);
+=======
+    return axios.post(USERS_API_URL + "/users", user);
+>>>>>>> yuanmanhong
 };
 
 export const updateUser = (newUser) => {

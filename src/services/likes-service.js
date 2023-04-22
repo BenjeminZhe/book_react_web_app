@@ -3,16 +3,16 @@ import axios from "axios";
 const LIKES_API = "http://localhost:4000/likes";
 const USERS_API = "http://localhost:4000/users";
 
-export const userLikesBook = async (userId, bookId) => {
+export const userLikesBook = async (bookId) => {
     const response = await axios.post(
-        `${USERS_API}/${userId}/likes/books/${bookId}`
+        `${USERS_API}/likes/${bookId}`
     );
     return response.data;
 };
 
-export const userUnlikesBook = async (userId, bookId) => {
+export const userUnlikesBook = async (bookId) => {
     const response = await axios.delete(
-        `${USERS_API}/${userId}/likes/books/${bookId}`
+        `${USERS_API}/unlikes/${bookId}`
     );
     return response.data;
 };
@@ -24,7 +24,11 @@ export const findAllLikes = async () => {
 }
 
 export const findBooksLikedByUser = async (userId) => {
+<<<<<<< HEAD
     const response = await axios.get(`${USERS_API}/${userId}/likes`);
+=======
+    const response = await axios.get(`${LIKES_API}/${userId}/books`);
+>>>>>>> yuanmanhong
     return response.data;
 };
 

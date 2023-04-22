@@ -16,6 +16,7 @@ import LoginScreen from "./login/index.js";
 import Profile from "./profile/index.js";
 import {likesReducer} from "./reducers/likes-reducer";
 import RegisterPage from "./register/index.js";
+<<<<<<< HEAD
 import BookDetailsScreen from "./book/book-details"
 import ProfileScreen from "./profile/index.js";
 import EditProfile from "./profile/edit-profile";
@@ -23,13 +24,22 @@ import OtherProfileScreen from "./profile/other-profile";
 import AdminScreen from "./profile/admin-page";
 import AuthorScreen from "./profile/author-page";
 
+=======
+import {awardedBooksReducer, popularAuthorReducer, top15BooksReducer} from "./reducers/book-reducer";
+import thunk from "redux-thunk";
+>>>>>>> yuanmanhong
 //import './App.css';
 const store = configureStore({
-  reducer: {
-    users: usersReducer,
-      likesReducer: likesReducer
-  }
-})
+    reducer: {
+        users: usersReducer,
+        likes: likesReducer,
+        top15Books: top15BooksReducer,
+        awardedBooks: awardedBooksReducer,
+        popularAuthors: popularAuthorReducer,
+    },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
+});
+
 
 function App() {
     //console.log(store.getState())

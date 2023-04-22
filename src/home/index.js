@@ -1,45 +1,42 @@
-import {useEffect, useState} from "react";
-import {getTop15Books, getAwardedBooks, getPopularAuthors} from "../services/book-service";
-import {useSelector} from "react-redux";
-import bookArray from "../search/books.json";
-import {findLikesByUserId} from "../services/likes-service";
-import {Link} from "react-router-dom";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchTop15Books } from "../actions/top-book-actions";
+import { fetchAwardedBooks } from "../actions/award-book-actions";
+import { fetchPopularAuthors } from "../actions/popular-author-actions";
+import { Link } from "react-router-dom";
 
 function Home() {
-    const [topBooks, setTopBooks] = useState([]);
-    const [awardBooks, setAwardBooks] = useState([]);
-    const [popularAuthors, setPopularAuthors] = useState([]);
+    // Retrieve current user
+    const { currentUser } = useSelector((state) => state.users);
 
-    // retrieve current user
-    const {currentUser} = useSelector((state) => state.users);
-    const fetchTopBooks = async () => {
-        const response = await getTop15Books();
-        setTopBooks(response);
-    };
-    const fetchAwardBooks = async () => {
-        const response = await getAwardedBooks();
-        setAwardBooks(response);
-    }
+    // Get data from Redux store
 
-    const fetchPopularAuthors = async () => {
-        const response = await getPopularAuthors();
-        setPopularAuthors(response);
-    }
+    const topBooks = useSelector((state) => state.top15Books.top15Books);
+    console.log(topBooks.length);
+    const awardBooks = useSelector((state) => state.awardedBooks.awardedBooks);
+    const popularAuthors = useSelector((state) => state.popularAuthors.popularAuthors);
+
+    // Use dispatch to fetch data when the component mounts
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        fetchTopBooks();
-        fetchAwardBooks();
-        fetchPopularAuthors();
-    }, []);
+        dispatch(fetchTop15Books());
+        dispatch(fetchAwardedBooks());
+        dispatch(fetchPopularAuthors());
+    }, [dispatch]);
+
 
     return (
 
         <div className="container mt-3">
             <div className="mt-4">
-                {currentUser && <h5 className="mb-2">Welcome {currentUser.username} {currentUser.role}!!</h5>}
+                {currentUser &&
+                    <h5 className="mb-4">
+                        Welcome To {currentUser.role} Home, {currentUser.username}!!
+                    </h5>}
                 {(!currentUser || currentUser.role === "USER") &&
                     <>
-                        <h3>Top 15 Books in This Month</h3>
+                        <h3 className="mb-3">Top 15 Books in This Month</h3>
                         <div>
                             <div className="row row-cols-2 row-cols-md-3  row-cols-lg-6 g-4">
                                 {topBooks && topBooks.map((book) => (<div className="col" key={book.book_id}>
