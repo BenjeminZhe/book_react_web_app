@@ -24,7 +24,7 @@ export const findAllLikes = async () => {
 }
 
 export const findBooksLikedByUser = async (userId) => {
-    const response = await axios.get(`${USERS_API}/${userId}/books`);
+    const response = await axios.get(`${USERS_API}/${userId}/likes`);
     return response.data;
 };
 

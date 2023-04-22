@@ -24,7 +24,7 @@ function AdminScreen() {
         </li>
         {users &&
           users.map((user) =>
-            <Link to={`/User/profile/${user.userName}`}> <AdminPageItem user={user}/> </Link>
+            <Link to={`/User/profile/${user._id}`}> <AdminPageItem user={user}/> </Link>
           )}
       </ul>
     </div>
