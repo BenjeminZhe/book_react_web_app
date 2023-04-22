@@ -5,21 +5,27 @@ import { faArrowLeft} from "@fortawesome/free-solid-svg-icons";
 import {
   profileThunk,
   logoutThunk,
+  updateUserThunk,
 } from "../thunks/users-thunk";
-import { useNavigate} from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { findBooksLikedByUser } from "../services/likes-service";
+import { findUserById } from "../services/users-service";
 import {
+  userFollowsUser,
+  userUnfollowsUser,
   findFollowsByFollowerId,
   findFollowsByFollowedId,
 } from "../services/follows-service";
 import { Link } from "react-router-dom";
 
-function ProfileScreen() {
+function OtherProfileScreen() {
+  const { userId } = useParams();
   const currentUser = useSelector((state) => state.users.currentUser);
   const [profile, setProfile] = useState(currentUser);
   const [likes, setLikes] = useState([]);
   const [following, setFollowing] = useState([]);
   const [follows, setFollows] = useState([]);
+  const [followCur, setFollowCur] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const fetchFollowing = async () => {
@@ -29,6 +35,9 @@ function ProfileScreen() {
   const fetchFollowers = async () => {
     const follows = await findFollowsByFollowedId(profile._id);
     setFollows(follows);
+    if (follows.findIndex(user => user._id === currentUser._id) !== -1) {
+      setFollowCur(true);
+    }
   };
   const fetchLikes = async () => {
     const likes = await findBooksLikedByUser(profile._id);
@@ -36,8 +45,8 @@ function ProfileScreen() {
   };
 
   const fetchProfile = async () => {
-    const response = await dispatch(profileThunk());
-    setProfile(response.payload);
+    const user = await findUserById(userId);
+    setProfile(user);
   };
   const loadScreen = async () => {
     // if (!profile) {
@@ -47,9 +56,28 @@ function ProfileScreen() {
     await fetchFollowing();
     await fetchFollowers();
   };
+  const followUser = async () => {
+    if (currentUser === null) {
+      navigate('/User/login');
+    }
+    await userFollowsUser(currentUser._id, profile._id);
+    setFollowCur(true);
+    const newFollows = follows.concat(currentUser);
+    setFollows(newFollows);
+  };
+  const unFollowUser = async () => {
+    await userUnfollowsUser(currentUser._id, profile._id);
+    setFollowCur(false);
+    const newFollows = follows.filter(user => user._id != currentUser._id);
+    setFollows(newFollows);
+  };
 
-  if (currentUser === null) {
-    navigate('/User/login');
+  if (typeof userId !== undefined) {
+    navigate('/User/profile');
+  }
+
+  if (currentUser._id === profile._id) {
+    navigate('/User/profile');
   }
 
   useEffect(() => {
@@ -65,15 +93,24 @@ function ProfileScreen() {
           </button>
         </div>
         <div className="col-10">
-          <div className="fw-bold fs-5 text-black">My Profile</div>
+          <div className="fw-bold fs-5 text-black">{profile.username}{"\'s profile"}</div>
         </div>
       </div>
+
+      {currentUser && currentUser.role === 'ADMIN' && (<Link to="/User/edit-profile" title="edit"><button className="rounded-pill float-end fw-bold border border-gray bg-transparent px-3 py-1">Edit Profile</button></Link>)}
+      <h1>
+        {!followCur && (<button onClick={followUser} className="btn btn-primary float-end">
+          Follow
+        </button>)}
+        {followCur && (<button onClick={unFollowUser} className="btn btn-primary float-end">
+          UnFollow
+        </button>)}
+      </h1>
 
       {profile && (
         <>
           <img src={`/images/${profile.backgroundImage}`} className="w-100 pb-2" height={200} alt="banner" />
           <img src={`/images/${profile.avatarIcon}`} className="rounded-circle img-thumbnail img-fluid position-relative border-0 profile-pic" width={120} alt="banner" />
-          <Link to="/User/edit-profile" title="edit"><button className="rounded-pill float-end fw-bold border border-gray bg-transparent px-3 py-1">Edit Profile</button></Link>
           <div className="form-group">
             <h2>Profile</h2>
             <div className="ms-3">
@@ -163,4 +200,4 @@ function ProfileScreen() {
   );
 }
 
-export default ProfileScreen;
+export default OtherProfileScreen;

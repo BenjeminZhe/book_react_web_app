@@ -17,6 +17,11 @@ import Profile from "./profile/index.js";
 import {likesReducer} from "./reducers/likes-reducer";
 import RegisterPage from "./register/index.js";
 import BookDetailsScreen from "./book/book-details"
+import ProfileScreen from "./profile/index.js";
+import EditProfile from "./profile/edit-profile";
+import OtherProfileScreen from "./profile/other-profile";
+import AdminScreen from "./profile/admin-page";
+import AuthorScreen from "./profile/author-page";
 
 //import './App.css';
 const store = configureStore({
@@ -43,9 +48,14 @@ function App() {
                             <Route path="/BookSearcher/home" element={<Home/>}/>
                             <Route path="/BookSearcher/search" element={<SearchBooks/>}/>
                             <Route path="/BookSearcher/search/:searchTerm" element={<SearchBooks/>}/>
-                            <Route path="/BookSearcher/register" element={<RegisterPage/>}/>
-                            <Route path="/BookSearcher/login" element={<LoginScreen/>}/>
-                            <Route path="/BookSearcher/profile" element={<Profile/>}/>
+                            <Route path="/User/register" element={<RegisterPage/>}/>
+                            <Route path="/User/login" element={<LoginScreen/>}/>
+                            <Route path="/User/admin" element={<AdminScreen />} />
+                            <Route path="/User/author" element={<AuthorScreen />} />
+                            <Route path="/User/profile" element={<ProfileScreen/>}/>
+                            <Route path="/User/profile/:userId" element={<OtherProfileScreen/>}/>
+                            <Route path="/User/edit-profile" element={<EditProfile/>}/>
+                            <Route path="/User/edit-profile/:userId" element={<EditProfile/>}/>
                             <Route path="/book/:id" element={<BookDetailsScreen/>}/>
                         </Routes>
                     </div>
