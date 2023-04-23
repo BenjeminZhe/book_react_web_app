@@ -13,7 +13,7 @@ function LogOutScreen() {
     <>
       <h2>Are you sure to log out?</h2>
       <div>
-        <button onClick={logout} className="btn btn-danger mt-3 me-2">
+        <button onClick={() => {logout(); navigate('/User/home');}} className="btn btn-danger mt-3 me-2">
           Confirm
         </button>
         <button onClick={() => navigate('/User/home')} className="btn btn-primary mt-3">

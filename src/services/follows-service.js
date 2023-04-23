@@ -23,11 +23,11 @@ export const userUnfollowsUser = async (followedId) => {
 };
 
 export const findFollowsByFollowedId = async (followed) => {
-  const response = await api.get(`${USERS_API}/${followed}/followers`);
+  const response = await api.get(`${USERS_API}/users/${followed}/followers`);
   return response.data;
 };
 
 export const findFollowsByFollowerId = async (follower) => {
-  const response = await api.get(`${USERS_API}/${follower}/following`);
+  const response = await api.get(`${USERS_API}/users/${follower}/following`);
   return response.data;
 };
