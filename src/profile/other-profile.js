@@ -72,9 +72,12 @@ function OtherProfileScreen() {
     setFollows(newFollows);
   };
 
-  if (typeof userId !== undefined) {
+  if (typeof userId === undefined) {
     navigate('/User/profile');
   }
+
+  console.log(userId);
+  console.log(profile);
 
   if (currentUser._id === profile._id) {
     navigate('/User/profile');
@@ -82,7 +85,7 @@ function OtherProfileScreen() {
 
   useEffect(() => {
     loadScreen();
-  });
+  }, []);
 
   return (
     <div>
