@@ -18,7 +18,6 @@ export const findUserById = async (id) => {
 };
 
 export const createUser = (user) => {
-
     return axios.post(`${USERS_API_URL}/users`, user);
 
 };
