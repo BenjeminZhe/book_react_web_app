@@ -6,7 +6,9 @@ const api = axios.create({
 });
 
 export const findAllUsers = async () => {
+
     const response = await axios.get(`${USERS_API_URL}/users`);
+
     return response.data;
 };
 
@@ -17,6 +19,7 @@ export const findUserById = async (id) => {
 
 export const createUser = (user) => {
     return axios.post(`${USERS_API_URL}/users`, user);
+
 };
 
 export const updateUser = (newUser) => {
