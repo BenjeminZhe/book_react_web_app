@@ -53,22 +53,22 @@ function EditProfileScreen() {
       <div className="row align-items-center justify-content-start pb-2">
         <div className="col-1">
           {userId ?
-            (<Link className="text-black" to={`/Users/profile/${userId}`} title="cancel">
+            (<Link className="text-black" to={`/User/profile/${userId}`} title="cancel">
               <FontAwesomeIcon icon={faXmark} className="text-lg"/>
             </Link>) :
-            (<Link className="text-black" to="/Users/profile" title="cancel">
+            (<Link className="text-black" to="/User/profile" title="cancel">
               <FontAwesomeIcon icon={faXmark} className="text-lg"/>
             </Link>)}
         </div>
         <div className="col-11">
           <span className="fs-5 fw-bold">Edit Profile</span>
           {userId ?
-            (<Link to={`/Users/profile/${userId}`}>
+            (<Link to={`/User/profile/${userId}`}>
               <button className="rounded-pill float-end fw-bold bg-black text-white px-3 py-1"
                       onClick={updateProfile}>Update
               </button>
             </Link>) :
-            (<Link to="/Users/profile">
+            (<Link to="/User/profile">
               <button className="rounded-pill float-end fw-bold bg-black text-white px-3 py-1"
                       onClick={updateProfile}>Update
               </button>
@@ -163,23 +163,13 @@ function EditProfileScreen() {
               </div>
             </div>
 
-            <div>
+            {/*<div>
               <h3>{profile.username}</h3>
               <h3>{profile._id}</h3>
-            </div>
+            </div>*/}
           </div>
         </>
       )}
-
-      <button
-        className="btn btn-danger"
-        onClick={() => {
-          dispatch(logoutThunk());
-          navigate("/login");
-        }}
-      >
-        Logout
-      </button>
     </div>
   );
 }

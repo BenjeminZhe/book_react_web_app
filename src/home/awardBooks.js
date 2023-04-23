@@ -1,15 +1,28 @@
 import {Link} from "react-router-dom";
-import React from "react";
+import React, {useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchTop15Books} from "../actions/top-book-actions";
+import {fetchPopularAuthors} from "../actions/popular-author-actions";
+import {fetchAwardedBooks} from "../actions/award-book-actions";
 
 
 const AwardBooksComponent = () => {
+    const dispatch = useDispatch();
+    const awardBooks = useSelector((state) => state.awardedBooks.awardedBooks);
+    const loading = useSelector((state) => state.awardedBooks.loading);
+    const error = useSelector((state) => state.awardedBooks.error);
+
+    useEffect(() => {
+        dispatch(fetchAwardedBooks());
+    }, [dispatch]);
+
     return(
         <>
             <h3>Top 15 Awarded Books in Last Year</h3>
             <div>
                 <div className="row row-cols-2 row-cols-md-3  row-cols-lg-6 g-4">
                     {awardBooks && awardBooks.map((book) => (<div className="col" key={book.book_id}>
-                        <Link to={`/BookSearcher/book/${book.name}`} className="text-decoration-none text-dark">
+                        <Link to={`/book/${book.book_id}`} className="text-decoration-none text-dark">
 
                             <div className="card h-100">
                                 <img src={book.cover} className="card-img-top" height="200" width="100"
@@ -20,8 +33,11 @@ const AwardBooksComponent = () => {
                             </div>
                         </Link>
                     </div>))}
+                    {loading && <div>Loading...</div>}
+                    {error && <div>{error}</div>}
                 </div>
             </div>
         </>
     )
 }
+export default AwardBooksComponent;

@@ -30,14 +30,14 @@ const CurrentUserLikedBooks = ({ currentUser }) => {
             <ul className="list-group list-group-flush">
                 {likes.map((book) =>
                     // todo: link to detail page
-                    <Link to={`/BookSearcher/book/${book._id}`}>
+                    <Link to={`/book/${book._id}`}>
                         <li className="list-group-item"
                             key={book._id}>
                             {book.name}
                         </li>
                     </Link>
                 )}
-                {likes.length == 0 &&
+                {likes.length === 0 &&
                     <li className="list-group-item text-center">No books liked</li>}
             </ul>
         </div>
@@ -66,7 +66,7 @@ export default CurrentUserLikedBooks;
 //             <h5 className="text-center">Books you liked</h5>
 //             <ul className="list-group list-group-flush">
 //                 {likedBooks && likedBooks.map((book) =>
-//                     // todo: link to detail page
+//
 //                     <Link to={`/BookSearcher/book/${book._id}`}>
 //                         <li className="list-group-item"
 //                             key={book._id}>

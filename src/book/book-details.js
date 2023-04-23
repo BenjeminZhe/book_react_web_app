@@ -9,20 +9,18 @@ import LikeBook from "./like";
 
 function BookDetailsScreen() {
 
-    // const { currentUser } = useSelector((state) => state.users);
-
     var { id } = useParams();
     console.log("id is ", id);
     const {currentUser} = useSelector((state) => state.users);
     const [book, setBook] = useState({
-        name: "loading...",
-        // authors:"loading..."
     });
     
 
     const fetchBook = async () => {
         const response = await getBook(id);
-        setBook(response);
+        if (!response.error) {
+            setBook(response);
+        }
     };
 
     useEffect(() => {

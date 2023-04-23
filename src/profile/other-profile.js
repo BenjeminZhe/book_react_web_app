@@ -29,13 +29,13 @@ function OtherProfileScreen() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const fetchFollowing = async () => {
-    const following = await findFollowsByFollowerId(profile._id);
+    const following = await findFollowsByFollowerId(userId);
     setFollowing(following);
   };
   const fetchFollowers = async () => {
-    const follows = await findFollowsByFollowedId(profile._id);
+    const follows = await findFollowsByFollowedId(userId);
     setFollows(follows);
-    if (follows.findIndex(user => user._id === currentUser._id) !== -1) {
+    if (follows.findIndex(followObj => followObj.follower._id === currentUser._id) !== -1) {
       setFollowCur(true);
     }
   };
@@ -60,15 +60,16 @@ function OtherProfileScreen() {
     if (currentUser === null) {
       navigate('/User/login');
     }
-    await userFollowsUser(currentUser._id, profile._id);
+    await userFollowsUser(profile._id);
     setFollowCur(true);
-    const newFollows = follows.concat(currentUser);
+    const newFollow = {"followed": profile._id, "follower": currentUser._id};
+    const newFollows = follows.concat(newFollow);
     setFollows(newFollows);
   };
   const unFollowUser = async () => {
-    await userUnfollowsUser(currentUser._id, profile._id);
+    await userUnfollowsUser(profile._id);
     setFollowCur(false);
-    const newFollows = follows.filter(user => user._id != currentUser._id);
+    const newFollows = follows.filter(follow => follow.follower._id !== currentUser._id);
     setFollows(newFollows);
   };
 
@@ -76,8 +77,8 @@ function OtherProfileScreen() {
     navigate('/User/profile');
   }
 
-  console.log(userId);
-  console.log(profile);
+  //console.log(userId);
+  //console.log(profile);
 
   if (currentUser._id === profile._id) {
     navigate('/User/profile');
@@ -100,12 +101,12 @@ function OtherProfileScreen() {
         </div>
       </div>
 
-      {currentUser && currentUser.role === 'ADMIN' && (<Link to="/User/edit-profile" title="edit"><button className="rounded-pill float-end fw-bold border border-gray bg-transparent px-3 py-1">Edit Profile</button></Link>)}
+      {currentUser && currentUser.role === 'ADMIN' && (<Link to={`/User/edit-profile/${profile._id}`} title="edit"><button className="rounded-pill float-end fw-bold border border-gray bg-transparent px-3 py-1">Edit Profile</button></Link>)}
       <h1>
         {!followCur && (<button onClick={followUser} className="btn btn-primary float-end">
           Follow
         </button>)}
-        {followCur && (<button onClick={unFollowUser} className="btn btn-primary float-end">
+        {followCur && (<button onClick={unFollowUser} className="btn btn-danger float-end">
           UnFollow
         </button>)}
       </h1>
@@ -129,10 +130,10 @@ function OtherProfileScreen() {
               </ul>
             </div>
 
-            <div>
+            {/*<div>
               <h3>{profile.username}</h3>
               <h3>{profile._id}</h3>
-            </div>
+            </div>*/}
           </div>
         </>
       )}
@@ -144,7 +145,7 @@ function OtherProfileScreen() {
             {follows.map((follow) => (
               <li className="list-group-item">
                 <Link to={`/User/profile/${follow.follower._id}`}>
-                  <img className="rounded-circle" height={48} src={follow.follower.avatarIcon} alt={""}/>
+                  <img className="rounded-circle" height={48} src={follow.follower.avatarIcon} alt={"Image not available"}/>
                 </Link>
               </li>
             ))}
@@ -166,16 +167,7 @@ function OtherProfileScreen() {
           </ul>
         </div>
       )}
-      <div>
-        {currentUser && (
-          <div>
-            <h2>
-              Welcome {currentUser.username} {currentUser._id}
-            </h2>
-          </div>
-        )}
-      </div>
-      <button
+      {/*<button
         className="btn btn-danger"
         onClick={() => {
           dispatch(logoutThunk());
@@ -183,7 +175,7 @@ function OtherProfileScreen() {
         }}
       >
         Logout
-      </button>
+      </button>*/}
       <div>
         <h2>Likes</h2>
         <ul className="list-group">

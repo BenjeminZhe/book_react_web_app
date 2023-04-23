@@ -39,8 +39,8 @@ function ReviewList() {
                     {reviews.map((review, index) => (
                         <li key={index}>
                             <p>{review.review}</p>
-                            <p> Reviewed by {review.author? review.author.username :" unknown"}
-                                <a href={`/profile/${review.author? String(review.author.username) :" unknown"}`}>{review.author? String(review.author.username) :" unknown"}</a>
+                            <p> Reviewed by
+                                {review.author?<Link to={'/User/profile/'+review.author._id}> {String(review.author.username)}</Link> : <a>You</a> }
                             </p>
                         </li>
                     ))}

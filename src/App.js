@@ -1,6 +1,9 @@
 // import {configureStore} from "@reduxjs/toolkit";
 // import {Provider} from "react-redux";
 import {Routes, Route, Navigate} from "react-router";
+import { persistReducer, persistStore } from 'redux-persist';
+import { PersistGate } from 'redux-persist/integration/react';
+import storage from 'redux-persist/lib/storage';
 import NavigationSidebar from "./navigation-sidebar/index.js";
 // import HomeComponent from "./home";
 import SearchBooks from "./search/index.js";
@@ -25,10 +28,16 @@ import AuthorScreen from "./profile/author-page";
 import {awardedBooksReducer, popularAuthorReducer, top15BooksReducer} from "./reducers/book-reducer";
 import thunk from "redux-thunk";
 
+const persistConfig = {
+    key: 'root',
+    storage,
+  }
+const persistedReducer = persistReducer(persistConfig, usersReducer)
+
 //import './App.css';
 const store = configureStore({
     reducer: {
-        users: usersReducer,
+        users: persistedReducer,
         likes: likesReducer,
         top15Books: top15BooksReducer,
         awardedBooks: awardedBooksReducer,
@@ -36,12 +45,22 @@ const store = configureStore({
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
 });
+const persistor = persistStore(store);
 
-
+//
+// =======
+//   reducer: {
+//     users: persistedReducer,
+//       likesReducer: likesReducer
+//   }
+// })
+// const persistor = persistStore(store)
+// >>>>>>> fb0ef2bcf9b14bb4629a1d82aa735b4b7a1ec3aa
 function App() {
     //console.log(store.getState())
     return (
         <Provider store={store}>
+            <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter>
             <div className="container">
                 <div className="row mt-2">
@@ -70,6 +89,7 @@ function App() {
                 </div>
             </div>
         </BrowserRouter>
+        </PersistGate>
         </Provider>
         // <div className="row mt-2">
         //   <div className="col-2 col-md-2 col-lg-1 col-xl-2">
