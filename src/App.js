@@ -1,6 +1,9 @@
 // import {configureStore} from "@reduxjs/toolkit";
 // import {Provider} from "react-redux";
 import {Routes, Route, Navigate} from "react-router";
+import { persistReducer, persistStore } from 'redux-persist';
+import { PersistGate } from 'redux-persist/integration/react';
+import storage from 'redux-persist/lib/storage';
 import NavigationSidebar from "./navigation-sidebar/index.js";
 // import HomeComponent from "./home";
 import SearchBooks from "./search/index.js";
@@ -23,18 +26,25 @@ import OtherProfileScreen from "./profile/other-profile";
 import AdminScreen from "./profile/admin-page";
 import AuthorScreen from "./profile/author-page";
 
+const persistConfig = {
+    key: 'root',
+    storage,
+  }
+const persistedReducer = persistReducer(persistConfig, usersReducer)
+
 //import './App.css';
 const store = configureStore({
   reducer: {
-    users: usersReducer,
+    users: persistedReducer,
       likesReducer: likesReducer
   }
 })
-
+const persistor = persistStore(store)
 function App() {
     //console.log(store.getState())
     return (
         <Provider store={store}>
+            <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter>
             <div className="container">
                 <div className="row mt-2">
@@ -63,6 +73,7 @@ function App() {
                 </div>
             </div>
         </BrowserRouter>
+        </PersistGate>
         </Provider>
         // <div className="row mt-2">
         //   <div className="col-2 col-md-2 col-lg-1 col-xl-2">
