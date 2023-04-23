@@ -3,15 +3,15 @@ import {createAsyncThunk} from "@reduxjs/toolkit";
 
 export const UserLikesBookThunk = createAsyncThunk(
     "likes/userLikesBook",
-    async ( bid) => {
-    const status = await likesService.userLikesBook(bid);
+    async (uid, bid) => {
+    const status = await likesService.userLikesBook(uid, bid);
     return status;
 });
 
 export const UserUnlikesBookThunk = createAsyncThunk(
     "likes/userUnlikesBook",
-    async (bid) => {
-    const status = await likesService.userUnlikesBook(bid);
+    async (uid, bid) => {
+    const status = await likesService.userUnlikesBook(uid, bid);
     return status;
     }
 );
