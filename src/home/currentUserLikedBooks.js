@@ -37,7 +37,7 @@ const CurrentUserLikedBooks = ({ currentUser }) => {
                         </li>
                     </Link>
                 )}
-                {likes.length == 0 &&
+                {likes.length === 0 &&
                     <li className="list-group-item text-center">No books liked</li>}
             </ul>
         </div>
