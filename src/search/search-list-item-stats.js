@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import {findBooksLikedByUser} from "../services/likes-service";
 import {UserUnlikesBookThunk, UserLikesBookThunk} from "../thunks/likes-thunk";
 import {useDispatch, useSelector} from "react-redux";
+import {searchBookById} from "../services/book-service";
 
 
 const SearchListItemStats = ({book}) => {
@@ -11,12 +12,12 @@ const SearchListItemStats = ({book}) => {
     useEffect(() => {
         const checkIfLiked = async () => {
             const response = await findBooksLikedByUser(currentUser._id);
-            const likes = response.filter(likedbook => likedbook.book_id === book.book_id);
-            if (likes.length > 0) {
-                setLiked(true);
-            } else {
-                setLiked(false);
-            }
+            response.map((like) => {
+                if(like.book_id === book.book_id.toString()){
+                    setLiked(true);
+                }}
+            );
+
         };
         checkIfLiked();
     }, []);

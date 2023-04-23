@@ -13,6 +13,16 @@ export const searchBookByName = async (term) => {
     return response.data;
 }
 
+export const searchBookById = async (bookId) => {
+    const response = await axios.get(`${BOOK_API}/book/${bookId}`, {
+        headers: {
+            'X-RapidAPI-Key': '',
+            'X-RapidAPI-Host': 'hapi-books.p.rapidapi.com'
+        }
+    });
+    return response.data;
+}
+
 export const getTop15Books = async () => {
     const month = new Date().getMonth() + 1;
     const year = new Date().getFullYear();

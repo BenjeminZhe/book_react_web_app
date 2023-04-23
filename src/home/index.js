@@ -12,7 +12,7 @@ function Home() {
     // Get data from Redux store
 
     const topBooks = useSelector((state) => state.top15Books.top15Books);
-    console.log(topBooks.length);
+    //console.log(topBooks.length);
     const awardBooks = useSelector((state) => state.awardedBooks.awardedBooks);
     const popularAuthors = useSelector((state) => state.popularAuthors.popularAuthors);
 

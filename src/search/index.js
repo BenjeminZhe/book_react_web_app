@@ -10,11 +10,11 @@ function SearchBooks() {
     const [searchTerm, setSearchTerm] = useState(defaultSearchTerm || '');
     const [results, setResults] = useState({});
     const navigate = useNavigate();
-    const fetchBooks = async () => {
-        const response = await searchBookByName(searchTerm);
-        setResults(response);
-        //console.log(response);
-    };
+    // const fetchBooks = async () => {
+    //     const response = await searchBookByName(searchTerm);
+    //     setResults(response);
+    //     //console.log(response);
+    // };
     useEffect(() => {
         if(defaultSearchTerm) {
             setSearchTerm(defaultSearchTerm);
