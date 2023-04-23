@@ -13,6 +13,7 @@ import {
   findFollowsByFollowedId,
 } from "../services/follows-service";
 import { Link } from "react-router-dom";
+import {searchBookById} from "../services/book-service";
 
 function ProfileScreen() {
   const currentUser = useSelector((state) => state.users.currentUser);
@@ -31,8 +32,16 @@ function ProfileScreen() {
     setFollows(follows);
   };
   const fetchLikes = async () => {
-    const likes = await findBooksLikedByUser(profile._id);
-    setLikes(likes);
+    try {
+      const response = await findBooksLikedByUser(currentUser._id);
+      const books = await Promise.all(response.map(async (like) => {
+        const book = await searchBookById(like.book_id);
+        return book;
+      }));
+      setLikes(books);
+    } catch (error) {
+      console.error("Error fetching liked books:", error);
+    }
   };
 
   const fetchProfile = async () => {
@@ -131,11 +140,11 @@ function ProfileScreen() {
         <ul className="list-group">
           {likes.map((like) => (
             <li className="list-group-item">
-              <Link to={`/book/${like.book.book_id}`}>
-                <h3>{like.book.name}</h3>
+              <Link to={`/book/${like._id}`}>
+                <h3>{like.book_id}</h3>
               </Link>
               <img
-                src={like.book.cover} alt={"alter image"}
+                src={like.cover} alt={"alter image"}
               />
             </li>
           ))}
