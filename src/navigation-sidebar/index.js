@@ -53,16 +53,14 @@ function NavigationSidebar() {
                       Author
                   </Link>}
                 {currentUser &&
-<<<<<<< HEAD
-                    <Link to="/User/logout" className={`list-group-item ${active === 'logout'?'active':''}`}>
-=======
+
                     <button
                         onClick={() => {
                             dispatch(logoutThunk());
                             navigate("/BookSearcher/home");
                         }}
                         className={`list-group-item ${active === 'logout'?'active':''}`}>
->>>>>>> yuanmanhong
+
                         <i className="bi bi-box-arrow-right text-dark pe-1"></i>
                         Logout
                     </button>
