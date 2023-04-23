@@ -112,7 +112,7 @@ function ProfileScreen() {
           <ul className="list-group d-flex flex-row">
             {follows.map((follow) => (
               <li className="list-group-item">
-                <Link to={`/User/profile/${follow.follower._id}`}>
+                <Link to={`/User/profile/${follow.follower}`}>
                   <img className="rounded-circle" height={48} src={follow.follower.avatarIcon} alt={""}/>
                 </Link>
               </li>
@@ -127,7 +127,7 @@ function ProfileScreen() {
           <ul className="list-group d-flex flex-row">
             {following.map((follow) => (
               <li className="list-group-item">
-                <Link to={`/User/profile/${follow.followed._id}`}>
+                <Link to={`/User/profile/${follow.followed}`}>
                   <img className="rounded-circle" height={48} src={follow.followed.avatarIcon} alt={""}/>
                 </Link>
               </li>
