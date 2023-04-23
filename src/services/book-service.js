@@ -6,7 +6,7 @@ const BOOK_API = "https://hapi-books.p.rapidapi.com";
 export const searchBookByName = async (term) => {
     const response = await axios.get(`${BOOK_API}/search/${term}`, {
         headers: {
-            'X-RapidAPI-Key': 'a3abebbc72mshf77f8c697a7951fp1598a5jsn6212df2db974',
+            'X-RapidAPI-Key': '',
             'X-RapidAPI-Host': 'hapi-books.p.rapidapi.com'
         }
     });
@@ -16,7 +16,7 @@ export const searchBookByName = async (term) => {
 export const searchBookById = async (bookId) => {
     const response = await axios.get(`${BOOK_API}/book/${bookId}`, {
         headers: {
-            'X-RapidAPI-Key': 'a3abebbc72mshf77f8c697a7951fp1598a5jsn6212df2db974',
+            'X-RapidAPI-Key': '',
             'X-RapidAPI-Host': 'hapi-books.p.rapidapi.com'
         }
     });
@@ -28,7 +28,7 @@ export const getTop15Books = async () => {
     const year = new Date().getFullYear();
     const response = await axios.get(`${BOOK_API}/month/${year}/${month}`, {
         headers: {
-             'X-RapidAPI-Key': 'a3abebbc72mshf77f8c697a7951fp1598a5jsn6212df2db974',
+             'X-RapidAPI-Key': '',
             'X-RapidAPI-Host': 'hapi-books.p.rapidapi.com'
         }
     });
@@ -40,7 +40,7 @@ export const getAwardedBooks = async () => {
     console.log(year);
     const response = await axios.get(`${BOOK_API}/top/${year}`, {
         headers: {
-            'X-RapidAPI-Key': 'a3abebbc72mshf77f8c697a7951fp1598a5jsn6212df2db974',
+            'X-RapidAPI-Key': '',
             'X-RapidAPI-Host': 'hapi-books.p.rapidapi.com'
         }
     });
@@ -50,7 +50,7 @@ export const getAwardedBooks = async () => {
 export const getPopularAuthors = async () => {
     const response = await axios.get(`${BOOK_API}/top_authors`, {
         headers: {
-            'X-RapidAPI-Key': 'a3abebbc72mshf77f8c697a7951fp1598a5jsn6212df2db974',
+            'X-RapidAPI-Key': '',
             'X-RapidAPI-Host': 'hapi-books.p.rapidapi.com'
         }
     });
