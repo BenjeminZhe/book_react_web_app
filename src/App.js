@@ -25,6 +25,8 @@ import EditProfile from "./profile/edit-profile";
 import OtherProfileScreen from "./profile/other-profile";
 import AdminScreen from "./profile/admin-page";
 import AuthorScreen from "./profile/author-page";
+import {awardedBooksReducer, popularAuthorReducer, top15BooksReducer} from "./reducers/book-reducer";
+import thunk from "redux-thunk";
 
 const persistConfig = {
     key: 'root',
@@ -34,12 +36,26 @@ const persistedReducer = persistReducer(persistConfig, usersReducer)
 
 //import './App.css';
 const store = configureStore({
-  reducer: {
-    users: persistedReducer,
-      likesReducer: likesReducer
-  }
-})
-const persistor = persistStore(store)
+    reducer: {
+        users: persistedReducer,
+        likes: likesReducer,
+        top15Books: top15BooksReducer,
+        awardedBooks: awardedBooksReducer,
+        popularAuthors: popularAuthorReducer,
+    },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
+});
+const persistor = persistStore(store);
+
+//
+// =======
+//   reducer: {
+//     users: persistedReducer,
+//       likesReducer: likesReducer
+//   }
+// })
+// const persistor = persistStore(store)
+// >>>>>>> fb0ef2bcf9b14bb4629a1d82aa735b4b7a1ec3aa
 function App() {
     //console.log(store.getState())
     return (
