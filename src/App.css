@@ -36,3 +36,30 @@
     transform: rotate(360deg);
   }
 }
+
+.wd-book-cover{
+  height: 400px;
+  width: 300px;
+}
+
+.wd-text-synopsis{
+  font-size: 10px;
+  color: darkgrey;
+}
+
+.wd-text-rl{
+  font-size: 14px;
+  color: rgb(75, 72, 72);
+}
+
+.wd-text-review{
+  font-size: 20px;
+  color: rgb(99, 9, 9);
+}
+
+
+.wd-text-general{
+  font-size: 13px;
+  color: grey;
+  font-family: -apple-system;
+}

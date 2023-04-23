@@ -20,8 +20,8 @@ const RegisterPage = () => {
     const admin = "ADMIN";
     const adminCode = "myBestBook";
     const dateOfBirth = '01/01/1970';
-    const avatarIcon = '/images/my-great-books-logo.png';
-    const backgroundImage = '/images/work-life-balance.jpeg';
+    const avatarIcon = 'my-great-books-logo.png';
+    const backgroundImage = 'work-life-balance.jpeg';
     const bio = 'Please introduce yourself!';
 
     let today = new Date();

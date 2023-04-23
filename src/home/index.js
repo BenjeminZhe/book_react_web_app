@@ -41,7 +41,7 @@ function Home() {
                             <div className="row row-cols-2 row-cols-md-3  row-cols-lg-6 g-4">
                                 {topBooks && topBooks.map((book) => (<div className="col" key={book.book_id}>
                                     {/*todo: link with detail page*/}
-                                    <Link to={`/BookSearcher/book/${book.name}`} className="text-decoration-none">
+                                    <Link to={`/book/${book.book_id}`} className="text-decoration-none">
                                         <div className="card h-100">
                                             <img src={book.cover} className="card-img-top" height="200" width="100"
                                                  alt={book.name}/>

@@ -6,25 +6,33 @@ const api = axios.create({
 });
 
 export const findAllUsers = async () => {
+<<<<<<< HEAD
+    const response = await axios.get(`${USERS_API_URL}/users`);
+=======
     const response = await axios.get(USERS_API_URL + "/users");
+>>>>>>> yuanmanhong
     return response.data;
 };
 
 export const findUserById = async (id) => {
-    const response = await axios.get(`${USERS_API_URL}/userId/${id}`);
+    const response = await axios.get(`${USERS_API_URL}/users/${id}`);
     return response.data;
 };
 
 export const createUser = (user) => {
+<<<<<<< HEAD
+    return axios.post(`${USERS_API_URL}/users`, user);
+=======
     return axios.post(USERS_API_URL + "/users", user);
+>>>>>>> yuanmanhong
 };
 
 export const updateUser = (newUser) => {
-    return api.put(`${USERS_API_URL}/${newUser._id}`, newUser);
+    return api.put(`${USERS_API_URL}/users/${newUser._id}`, newUser);
 };
 
 export const deleteUser = (id) => {
-    return axios.delete(`${USERS_API_URL}/${id}`);
+    return axios.delete(`${USERS_API_URL}/users/${id}`);
 };
 
 export const login = (user) => {
