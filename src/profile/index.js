@@ -54,7 +54,7 @@ function ProfileScreen() {
 
   useEffect(() => {
     loadScreen();
-  });
+  }, []);
 
   return (
     <div>
