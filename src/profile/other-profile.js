@@ -47,7 +47,6 @@ function OtherProfileScreen() {
         const book = await searchBookById(like.book_id);
         return book;
       }));
-      console.log(books)
       setLikes(books);
     } catch (error) {
       console.error("Error fetching liked books:", error);
