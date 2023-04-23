@@ -89,10 +89,10 @@ function ProfileScreen() {
               </ul>
             </div>
 
-            <div>
+            {/*<div>
               <h3>{profile.username}</h3>
               <h3>{profile._id}</h3>
-            </div>
+            </div>*/}
           </div>
         </>
       )}
@@ -126,24 +126,6 @@ function ProfileScreen() {
           </ul>
         </div>
       )}
-      <div>
-        {currentUser && (
-          <div>
-            <h2>
-              Welcome {currentUser.username} {currentUser._id}
-            </h2>
-          </div>
-        )}
-      </div>
-      <button
-        className="btn btn-danger"
-        onClick={() => {
-          dispatch(logoutThunk());
-          navigate("/User/login");
-        }}
-      >
-        Logout
-      </button>
       <div>
         <h2>Likes</h2>
         <ul className="list-group">
