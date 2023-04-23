@@ -6,14 +6,6 @@ const api = axios.create({
     withCredentials: true,
 });
 
-
-// export const fullTextSearch = async (query) => {
-//     const response = await api.get(
-//         `${BOOK_API}/search/verbose?query=${query}&apikey=${BOOK_KEY}`
-//     );
-//     return response.data.search.data;
-// };
-
 export const getBook = async (book_id) => {
     const options = {
         method: 'GET',
