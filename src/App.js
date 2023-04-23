@@ -13,7 +13,7 @@ import usersReducer from "./reducers/users-reducer";
 import {Provider} from "react-redux";
 // import EditProfile from "./profile/edit-profile";
 import LoginScreen from "./login/index.js";
-import Profile from "./profile/index.js";
+import LogoutScreen from "./logout/index.js";
 import {likesReducer} from "./reducers/likes-reducer";
 import RegisterPage from "./register/index.js";
 import BookDetailsScreen from "./book/book-details"
@@ -50,6 +50,7 @@ function App() {
                             <Route path="/BookSearcher/search/:searchTerm" element={<SearchBooks/>}/>
                             <Route path="/User/register" element={<RegisterPage/>}/>
                             <Route path="/User/login" element={<LoginScreen/>}/>
+                            <Route path="/User/logout" element={<LogoutScreen/>}/>
                             <Route path="/User/admin" element={<AdminScreen />} />
                             <Route path="/User/author" element={<AuthorScreen />} />
                             <Route path="/User/profile" element={<ProfileScreen/>}/>
