@@ -16,7 +16,7 @@ const PopularAuthorsComponent = () => {
 
     return(
         <>
-            <h3>Top 15 Popular Authors</h3>
+            <h3>Popular Authors</h3>
             <div>
                 <div className="row row-cols-1 row-cols-md-2  row-cols-lg-4 g-4">
                     {popularAuthors && popularAuthors.map((author) => (

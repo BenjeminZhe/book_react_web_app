@@ -18,7 +18,7 @@ const AwardBooksComponent = () => {
 
     return(
         <>
-            <h3>Top 15 Awarded Books in Last Year</h3>
+            <h3>Awarded Books in Last Year</h3>
             <div>
                 <div className="row row-cols-2 row-cols-md-3  row-cols-lg-6 g-4">
                     {awardBooks && awardBooks.map((book) => (<div className="col" key={book.book_id}>
