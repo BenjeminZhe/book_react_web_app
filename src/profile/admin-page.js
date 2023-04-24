@@ -12,6 +12,7 @@ function AdminScreen() {
   if (!currentUser || currentUser.role !== 'ADMIN') {
     navigate('/User/login');
   }
+  //console.log(users);
   useEffect(() => {
     dispatch(findAllUsersThunk());
   }, []);

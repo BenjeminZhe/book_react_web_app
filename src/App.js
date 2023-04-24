@@ -78,7 +78,7 @@ function App() {
                             <Route path="/User/login" element={<LoginScreen/>}/>
                             <Route path="/User/logout" element={<LogoutScreen/>}/>
                             <Route path="/User/admin" element={<AdminScreen />} />
-                            <Route path="/User/author" element={<AuthorScreen />} />
+                            {/*<Route path="/User/author" element={<AuthorScreen />} />*/}
                             <Route path="/User/profile" element={<ProfileScreen/>}/>
                             <Route path="/User/profile/:userId" element={<OtherProfileScreen/>}/>
                             <Route path="/User/edit-profile" element={<EditProfile/>}/>

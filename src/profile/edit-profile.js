@@ -5,7 +5,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
   profileThunk,
   logoutThunk,
-  updateUserThunk,
+  updateUserThunk, findAllUsersThunk, updateUserForSelfThunk,
 } from "../thunks/users-thunk";
 import {useNavigate, useParams} from "react-router";
 import {findUserById} from "../services/users-service";
@@ -37,6 +37,10 @@ function EditProfileScreen() {
     await dispatch(updateUserThunk(profile));
   };
 
+  const updateProfileForSelf = async () => {
+    await dispatch(updateUserForSelfThunk(profile));
+  };
+
   if (currentUser === null) {
     navigate('/Users/login');
   }
@@ -45,6 +49,7 @@ function EditProfileScreen() {
   }
 
   useEffect(() => {
+    dispatch(findAllUsersThunk());
     loadScreen();
   }, [userId]);
 
@@ -70,7 +75,7 @@ function EditProfileScreen() {
             </Link>) :
             (<Link to="/User/profile">
               <button className="rounded-pill float-end fw-bold bg-black text-white px-3 py-1"
-                      onClick={updateProfile}>Update
+                      onClick={updateProfileForSelf}>Update
               </button>
             </Link>)
           }
@@ -82,14 +87,14 @@ function EditProfileScreen() {
         <>
           <div>
             <img src={`/images/${profile.backgroundImage}`} className="w-100 dark-image" height={200} alt="banner"/>
-            <button className="rounded-circle position-relative btn-lg bg-dark bg-opacity-75 text-white icon-camera">
-              <FontAwesomeIcon icon={faCamera}/></button>
+            {/*<button className="rounded-circle position-relative btn-lg bg-dark bg-opacity-75 text-white icon-camera">
+              <FontAwesomeIcon icon={faCamera}/></button>*/}
           </div>
           <div>
             <img src={`/images/${profile.avatarIcon}`}
                  className="rounded-circle img-thumbnail position-relative border-0 avatar" width={120} alt="avatar"/>
-            <button className="rounded-circle position-relative btn-lg bg-dark bg-opacity-75 text-white icon-camera-2">
-              <FontAwesomeIcon icon={faCamera}/></button>
+            {/*<button className="rounded-circle position-relative btn-lg bg-dark bg-opacity-75 text-white icon-camera-2">
+              <FontAwesomeIcon icon={faCamera}/></button>*/}
           </div>
           <div className="form-group">
             <h2>Profile</h2>
