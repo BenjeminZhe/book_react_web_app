@@ -1,8 +1,17 @@
-import {Link} from "react-router-dom";
-import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
+import {useEffect} from "react";
 import {fetchPopularAuthors} from "../actions/popular-author-actions";
+import {Link} from "react-router-dom";
 
+const cache = new Map();
+
+const getDataFromCache = (key) => {
+    return cache.get(key);
+}
+
+const setDataToCache = (key, data) => {
+    cache.set(key, data);
+}
 
 const PopularAuthorsComponent = () => {
     const dispatch = useDispatch();
@@ -11,10 +20,20 @@ const PopularAuthorsComponent = () => {
     const error = useSelector((state) => state.popularAuthors.error);
 
     useEffect(() => {
-        dispatch(fetchPopularAuthors());
+        const cachedData = getDataFromCache('popularAuthors');
+        if (cachedData) {
+            dispatch({ type: 'FETCH_POPULAR_AUTHORS_SUCCESS', payload: cachedData });
+        } else {
+            dispatch(fetchPopularAuthors())
+                .then((data) => {
+                    setDataToCache('popularAuthors', data);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
     }, [dispatch]);
-
-    return(
+return(
         <>
             <h3>Popular Authors</h3>
             <div>

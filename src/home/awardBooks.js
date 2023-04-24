@@ -5,7 +5,6 @@ import {fetchTop15Books} from "../actions/top-book-actions";
 import {fetchPopularAuthors} from "../actions/popular-author-actions";
 import {fetchAwardedBooks} from "../actions/award-book-actions";
 
-
 const AwardBooksComponent = () => {
     const dispatch = useDispatch();
     const awardBooks = useSelector((state) => state.awardedBooks.awardedBooks);
@@ -13,8 +12,19 @@ const AwardBooksComponent = () => {
     const error = useSelector((state) => state.awardedBooks.error);
 
     useEffect(() => {
-        dispatch(fetchAwardedBooks());
+        const storedBooks = localStorage.getItem('awardBooks');
+        if (storedBooks) {
+            dispatch({ type: 'FETCH_AWARDED_BOOKS_SUCCESS', payload: JSON.parse(storedBooks) });
+        } else {
+            dispatch(fetchAwardedBooks());
+        }
     }, [dispatch]);
+
+    useEffect(() => {
+        if (awardBooks.length > 0) {
+            localStorage.setItem('awardBooks', JSON.stringify(awardBooks));
+        }
+    }, [awardBooks]);
 
     return(
         <>

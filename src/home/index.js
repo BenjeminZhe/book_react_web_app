@@ -6,7 +6,9 @@ import PopularAuthorsComponent from "./popularAuthors";
 
 function Home() {
     // Retrieve current user
-    const { currentUser } = useSelector((state) => state.users);
+    const { currentUser} = useSelector((state) => state.users);
+
+
 
     return (
 
