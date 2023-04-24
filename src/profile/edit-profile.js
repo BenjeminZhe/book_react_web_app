@@ -70,7 +70,7 @@ function EditProfileScreen() {
           {userId ?
             (<Link to={`/User/profile/${userId}`}>
               <button className="rounded-pill float-end fw-bold bg-black text-white px-3 py-1"
-                      onClick={updateProfile}>Update
+                      onClick={updateProfile}>Update Other's profile
               </button>
             </Link>) :
             (<Link to="/User/profile">

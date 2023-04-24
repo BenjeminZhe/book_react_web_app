@@ -32,18 +32,14 @@ function OtherProfileScreen() {
   const navigate = useNavigate();
   const fetchFollowing = async () => {
     const response = await findFollowsByFollowerId(userId);
-    console.log(response);
     const following = response.map(fol => fol.followed);
     setFollowing(following);
-    console.log(following);
   };
   const fetchFollowers = async () => {
     const response = await findFollowsByFollowedId(userId);
-    console.log(response);
-    const followers = response.map(fol => fol.follower);;
+    const followers = response.map(fol => fol.follower);
     setFollows(followers);
-    console.log(followers);
-    if (follows.findIndex(followObj => followObj._id === currentUser._id) !== -1) {
+    if (followers.findIndex(followObj => followObj._id.toString() === currentUser._id.toString()) !== -1) {
       setFollowCur(true);
     }
   };
@@ -134,8 +130,8 @@ function OtherProfileScreen() {
 
       {profile && (
         <>
-          <img src={`/images/${profile.backgroundImage}`} className="w-100 pb-2" height={200} alt="banner" />
-          <img src={`/images/${profile.avatarIcon}`} className="rounded-circle img-thumbnail img-fluid position-relative border-0 profile-pic" width={120} alt="banner" />
+          <img src={`/images/${profile.backgroundImage}`} className="w-100 pb-2 pt-2" height={200} alt="banner" />
+          <img src={`/images/${profile.avatarIcon}`} className="rounded-circle img-thumbnail img-fluid position-relative border-1" width={100} alt="banner" />
           <div className="form-group">
             <h2>Profile</h2>
             <div className="ms-3">
@@ -166,8 +162,9 @@ function OtherProfileScreen() {
             {follows.map((follow) => (
               <li className="list-group-item">
                 <Link to={`/User/profile/${follow._id}`}>
-                  <img className="rounded-circle" height={48} src={follow.avatarIcon} alt={"Image not available"}/>
+                  <h6>{follow.username}</h6>
                 </Link>
+                <img className="rounded-circle position-relative border-1 me-2" height={48} src={`/images/${follow.avatarIcon}`} alt={"Image not available"}/>
               </li>
             ))}
           </ul>
@@ -181,8 +178,9 @@ function OtherProfileScreen() {
             {following.map((follow) => (
               <li className="list-group-item">
                 <Link to={`/User/profile/${follow._id}`}>
-                  <img className="rounded-circle" height={48} src={follow.avatarIcon} alt={"Image not available"}/>
+                  <h6>{follow.username}</h6>
                 </Link>
+                <img className="rounded-circle position-relative border-1 me-2" height={48} src={`/images/${follow.avatarIcon}`} alt={"Image not available"}/>
               </li>
             ))}
           </ul>

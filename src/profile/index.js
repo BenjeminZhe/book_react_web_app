@@ -115,7 +115,7 @@ function ProfileScreen() {
             {follows.map((follow) => (
               <li className="list-group-item">
                 <Link to={`/User/profile/${follow._id}`}>
-                  <img className="rounded-circle" height={48} src={follow.avatarIcon} alt={"Image not available"}/>
+                  <img className="rounded-circle img-thumbnail img-fluid position-relative border-0" height={48} src={`/images/${follow.avatarIcon}`} alt={"Image not available"}/>
                 </Link>
               </li>
             ))}
@@ -130,7 +130,7 @@ function ProfileScreen() {
             {following.map((follow) => (
               <li className="list-group-item">
                 <Link to={`/User/profile/${follow._id}`}>
-                  <img className="rounded-circle" height={48} src={follow.avatarIcon} alt={"Image not available"}/>
+                  <img className="rounded-circle img-thumbnail img-fluid position-relative border-0" height={48} src={`/images/${follow.avatarIcon}`} alt={"Image not available"}/>
                 </Link>
               </li>
             ))}
