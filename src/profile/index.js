@@ -14,7 +14,6 @@ import {
   findFollowsByFollowedId,
 } from "../services/follows-service";
 import { Link } from "react-router-dom";
-import {findUserById} from "../services/users-service";
 
 function ProfileScreen() {
   const currentUser = useSelector((state) => state.users.currentUser);

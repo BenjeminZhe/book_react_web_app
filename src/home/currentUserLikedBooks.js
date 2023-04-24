@@ -14,7 +14,6 @@ const CurrentUserLikedBooks = ({ currentUser }) => {
                     const book = await searchBookById(like.book_id);
                     return book;
                 }));
-
                 setLikes(books);
             } catch (error) {
                 console.error("Error fetching liked books:", error);
@@ -30,9 +29,9 @@ const CurrentUserLikedBooks = ({ currentUser }) => {
             <ul className="list-group list-group-flush">
                 {likes.map((book) =>
                     // todo: link to detail page
-                    <Link to={`/book/${book._id}`}>
+                    <Link to={`/book/${book.book_id}`}>
                         <li className="list-group-item"
-                            key={book._id}>
+                            key={book.book_id}>
                             {book.name}
                         </li>
                     </Link>
