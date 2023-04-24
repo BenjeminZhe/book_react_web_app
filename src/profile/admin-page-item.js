@@ -7,11 +7,11 @@ import {deleteUserThunk} from "../thunks/users-thunk";
 const AdminPageItem = (
 
   {
-    user = { id: '123', username: 'NASA', avatarIcon: 'nasa-logo.jpeg' }
+    user = { _id: '123', username: 'NASA', avatarIcon: 'nasa-logo.jpeg' }
   }
 ) => {
   const dispatch = useDispatch();
-  const id = user.id;
+  const id = user._id;
   const deleteUser = () => {
     dispatch(deleteUserThunk(id));
   };

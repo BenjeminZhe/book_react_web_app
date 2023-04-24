@@ -8,11 +8,13 @@ import {
 } from "../thunks/users-thunk";
 import { useNavigate} from "react-router";
 import { findBooksLikedByUser } from "../services/likes-service";
+import {searchBookById} from "../services/book-service";
 import {
   findFollowsByFollowerId,
   findFollowsByFollowedId,
 } from "../services/follows-service";
 import { Link } from "react-router-dom";
+import {findUserById} from "../services/users-service";
 
 function ProfileScreen() {
   const currentUser = useSelector((state) => state.users.currentUser);
@@ -23,16 +25,26 @@ function ProfileScreen() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const fetchFollowing = async () => {
-    const following = await findFollowsByFollowerId(profile._id);
+    const response = await findFollowsByFollowerId(profile._id);
+    const following = response.map(fol => fol.followed).filter(follow => follow !== null);
     setFollowing(following);
   };
   const fetchFollowers = async () => {
-    const follows = await findFollowsByFollowedId(profile._id);
-    setFollows(follows);
+    const response = await findFollowsByFollowedId(profile._id);
+    const followers = response.map(fol => fol.follower).filter(follow => follow !== null);;
+    setFollows(followers);
   };
   const fetchLikes = async () => {
-    const likes = await findBooksLikedByUser(profile._id);
-    setLikes(likes);
+    try {
+      const response = await findBooksLikedByUser(currentUser._id);
+      const books = await Promise.all(response.map(async (like) => {
+        const book = await searchBookById(like.book_id);
+        return book;
+      }));
+      setLikes(books);
+    } catch (error) {
+      console.error("Error fetching liked books:", error);
+    }
   };
 
   const fetchProfile = async () => {
@@ -103,8 +115,8 @@ function ProfileScreen() {
           <ul className="list-group d-flex flex-row">
             {follows.map((follow) => (
               <li className="list-group-item">
-                <Link to={`/User/profile/${follow.follower}`}>
-                  <img className="rounded-circle" height={48} src={follow.follower.avatarIcon} alt={""}/>
+                <Link to={`/User/profile/${follow._id}`}>
+                  <img className="rounded-circle" height={48} src={follow.avatarIcon} alt={"Image not available"}/>
                 </Link>
               </li>
             ))}
@@ -118,8 +130,8 @@ function ProfileScreen() {
           <ul className="list-group d-flex flex-row">
             {following.map((follow) => (
               <li className="list-group-item">
-                <Link to={`/User/profile/${follow.followed}`}>
-                  <img className="rounded-circle" height={48} src={follow.followed.avatarIcon} alt={""}/>
+                <Link to={`/User/profile/${follow._id}`}>
+                  <img className="rounded-circle" height={48} src={follow.avatarIcon} alt={"Image not available"}/>
                 </Link>
               </li>
             ))}
@@ -131,11 +143,11 @@ function ProfileScreen() {
         <ul className="list-group">
           {likes.map((like) => (
             <li className="list-group-item">
-              <Link to={`/book/${like.book.book_id}`}>
-                <h3>{like.book.name}</h3>
+              <Link to={`/book/${like._id}`}>
+                <h3>{like.name}</h3>
               </Link>
               <img
-                src={like.book.cover} alt={"alter image"}
+                src={like.cover} alt={"alter image"}
               />
             </li>
           ))}

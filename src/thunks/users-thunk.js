@@ -30,6 +30,14 @@ export const updateUserThunk = createAsyncThunk(
     }
 );
 
+export const updateUserForSelfThunk = createAsyncThunk(
+  "users/update",
+  async (user) => {
+    await userService.updateUser(user);
+    return user;
+  }
+);
+
 export const deleteUserThunk = createAsyncThunk("users/delete", async (id) => {
     await userService.deleteUser(id);
     return id;
