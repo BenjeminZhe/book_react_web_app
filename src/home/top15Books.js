@@ -10,8 +10,19 @@ const Top15BooksComponent = () => {
     const error = useSelector((state) => state.top15Books.error);
 
     useEffect(() => {
-        dispatch(fetchTop15Books());
+        const storedBooks = localStorage.getItem('top15Books');
+        if (storedBooks) {
+            dispatch({ type: 'FETCH_TOP15_BOOKS_SUCCESS', payload: JSON.parse(storedBooks) });
+        } else {
+            dispatch(fetchTop15Books());
+        }
     }, [dispatch]);
+
+    useEffect(() => {
+        if (top15Books.length > 0) {
+            localStorage.setItem('top15Books', JSON.stringify(top15Books));
+        }
+    }, [top15Books]);
 
     return(
         <>
