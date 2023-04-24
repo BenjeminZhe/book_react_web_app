@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft} from "@fortawesome/free-solid-svg-icons";
-import {findUserById} from "../services/users-service"
+import {findUserById} from "../services/users-service";
+import {searchBookById} from "../services/book-service";
 import {
   profileThunk,
   logoutThunk,
@@ -30,13 +31,19 @@ function OtherProfileScreen() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const fetchFollowing = async () => {
-    const following = await findFollowsByFollowerId(userId);
+    const response = await findFollowsByFollowerId(userId);
+    console.log(response);
+    const following = response.map(fol => fol.followed);
     setFollowing(following);
+    console.log(following);
   };
   const fetchFollowers = async () => {
-    const follows = await findFollowsByFollowedId(userId);
-    setFollows(follows);
-    if (follows.findIndex(followObj => followObj.follower === currentUser._id) !== -1) {
+    const response = await findFollowsByFollowedId(userId);
+    console.log(response);
+    const followers = response.map(fol => fol.follower);;
+    setFollows(followers);
+    console.log(followers);
+    if (follows.findIndex(followObj => followObj._id === currentUser._id) !== -1) {
       setFollowCur(true);
     }
   };
@@ -82,10 +89,10 @@ function OtherProfileScreen() {
     setFollows(newFollows);
   };
 
-  const findIconById = (id) => {
+  /*const findIconById = (id) => {
     const user = findUserById(id);
     return user.avatarIcon;
-  }
+  }*/
 
   if (typeof userId === undefined) {
     navigate('/User/profile');
@@ -158,8 +165,8 @@ function OtherProfileScreen() {
           <ul className="list-group d-flex flex-row">
             {follows.map((follow) => (
               <li className="list-group-item">
-                <Link to={`/User/profile/${follow.follower}`}>
-                  <img className="rounded-circle" height={48} src={findIconById(follow.follower)} alt={"Image not available"}/>
+                <Link to={`/User/profile/${follow._id}`}>
+                  <img className="rounded-circle" height={48} src={follow.avatarIcon} alt={"Image not available"}/>
                 </Link>
               </li>
             ))}
@@ -173,8 +180,8 @@ function OtherProfileScreen() {
           <ul className="list-group d-flex flex-row">
             {following.map((follow) => (
               <li className="list-group-item">
-                <Link to={`/User/profile/${follow.followed}`}>
-                  <img className="rounded-circle" height={48} src={findIconById(follow.followed)} alt={""}/>
+                <Link to={`/User/profile/${follow._id}`}>
+                  <img className="rounded-circle" height={48} src={follow.avatarIcon} alt={"Image not available"}/>
                 </Link>
               </li>
             ))}
@@ -196,13 +203,11 @@ function OtherProfileScreen() {
           {likes.map((like) => (
             <li className="list-group-item">
               <Link to={`/book/${like._id}`}>
-
                 <h3>{like.name}</h3>
               </Link>
               <img
                 src={like.cover} alt={"alter image"}
               />
-
             </li>
           ))}
         </ul>
