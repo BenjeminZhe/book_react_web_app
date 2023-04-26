@@ -1,7 +1,6 @@
-import {useState} from "react";
 import {useDispatch} from "react-redux";
 import {logoutThunk} from "../thunks/users-thunk";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 function LogOutScreen() {
   const navigate = useNavigate();
