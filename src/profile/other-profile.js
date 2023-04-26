@@ -18,7 +18,6 @@ import {
   findFollowsByFollowedId,
 } from "../services/follows-service";
 import { Link } from "react-router-dom";
-import {searchBookById} from "../services/book-service";
 
 function OtherProfileScreen() {
   const { userId } = useParams();

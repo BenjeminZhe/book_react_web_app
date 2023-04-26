@@ -1,20 +1,16 @@
-// import {configureStore} from "@reduxjs/toolkit";
-// import {Provider} from "react-redux";
+
 import {Routes, Route, Navigate} from "react-router";
 import { persistReducer, persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import storage from 'redux-persist/lib/storage';
 import NavigationSidebar from "./navigation-sidebar/index.js";
-// import HomeComponent from "./home";
 import SearchBooks from "./search/index.js";
 import {BrowserRouter} from "react-router-dom";
 import Home from "./home";
 import CurrentUserLikedBooks from "./home/currentUserLikedBooks";
 import {configureStore} from "@reduxjs/toolkit";
-// import ProfileComponent from "./profile"
 import usersReducer from "./reducers/users-reducer";
 import {Provider} from "react-redux";
-// import EditProfile from "./profile/edit-profile";
 import LoginScreen from "./login/index.js";
 import LogoutScreen from "./logout/index.js";
 import {likesReducer} from "./reducers/likes-reducer";
@@ -24,7 +20,6 @@ import ProfileScreen from "./profile/index.js";
 import EditProfile from "./profile/edit-profile";
 import OtherProfileScreen from "./profile/other-profile";
 import AdminScreen from "./profile/admin-page";
-import AuthorScreen from "./profile/author-page";
 import {awardedBooksReducer, popularAuthorReducer, top15BooksReducer} from "./reducers/book-reducer";
 import thunk from "redux-thunk";
 
