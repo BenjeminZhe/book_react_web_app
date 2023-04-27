@@ -41,6 +41,7 @@ function ProfileScreen() {
         return book;
       }));
       setLikes(books);
+      console.log(books);
     } catch (error) {
       console.error("Error fetching liked books:", error);
     }
@@ -115,8 +116,9 @@ function ProfileScreen() {
             {follows.map((follow) => (
               <li className="list-group-item">
                 <Link to={`/User/profile/${follow._id}`}>
-                  <img className="rounded-circle img-thumbnail img-fluid position-relative border-0" height={48} src={`/images/${follow.avatarIcon}`} alt={"Image not available"}/>
+                  <h6>{follow.username}</h6>
                 </Link>
+                <img className="rounded-circle img-thumbnail img-fluid position-relative border-0" height={48} src={`/images/${follow.avatarIcon}`} alt={"Image not available"}/>
               </li>
             ))}
           </ul>
@@ -130,8 +132,9 @@ function ProfileScreen() {
             {following.map((follow) => (
               <li className="list-group-item">
                 <Link to={`/User/profile/${follow._id}`}>
-                  <img className="rounded-circle img-thumbnail img-fluid position-relative border-0" height={48} src={`/images/${follow.avatarIcon}`} alt={"Image not available"}/>
+                  <h6>{follow.username}</h6>
                 </Link>
+                <img className="rounded-circle img-thumbnail img-fluid position-relative border-0" height={48} src={`/images/${follow.avatarIcon}`} alt={"Image not available"}/>
               </li>
             ))}
           </ul>
@@ -142,10 +145,10 @@ function ProfileScreen() {
         <ul className="list-group">
           {likes.map((like) => (
             <li className="list-group-item">
-              <Link to={`/book/${like._id}`}>
-                <h3>{like.name}</h3>
+              <Link to={`/book/${like.book_id}`}>
+                <h6>{like.name}</h6>
               </Link>
-              <img
+              <img width={150}
                 src={like.cover} alt={"alter image"}
               />
             </li>
